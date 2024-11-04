@@ -1,7 +1,7 @@
 // RedVeterinarias.ts
 
 export class Veterinaria {
-    constructor(public id: string, public nombre: string, public direccion: string) {}
+    constructor(public id: string, public nombre: string, public direccion: string) { }
 }
 
 export class Cliente {
@@ -18,11 +18,11 @@ export class Cliente {
 }
 
 export class Paciente {
-    constructor(public id: string, public nombre: string, public especie: string, public idPropietario: string) {}
+    constructor(public id: string, public nombre: string, public especie: string, public idPropietario: string) { }
 }
 
 export class Proveedor {
-    constructor(public id: string, public nombre: string, public contacto: string) {}
+    constructor(public id: string, public nombre: string, public contacto: string) { }
 }
 
 export class RedVeterinarias {
@@ -31,8 +31,8 @@ export class RedVeterinarias {
     private pacientes: Paciente[] = [];
     private proveedores: Proveedor[] = [];
 
-     // Método para obtener la lista de clientes
-     obtenerClientes(): Cliente[] {
+    // Método para obtener la lista de clientes
+    obtenerClientes(): Cliente[] {
         return this.clientes;
     }
 
