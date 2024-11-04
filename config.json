@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+      "target": "es2015",            
+      "module": "commonjs",           
+      "lib": ["es2015", "dom"],      
+      "strict": true,                   
+      "esModuleInterop": true,          
+      "skipLibCheck": true,           
+      "forceConsistentCasingInFileNames": true 
+    },
+    "include": [
+      "src/Veterinaria.ts",            
+      "src/main.ts",
+      "src/Paciente.ts",
+      "src/Clientes.ts",
+      "src/Proveedor.ts",
+      "src/RedVeterinarias.ts"                  
+    ],
+    "exclude": ["node_modules"]         
+  }
+  
