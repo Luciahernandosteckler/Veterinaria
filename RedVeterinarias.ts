@@ -1,75 +1,35 @@
-// RedVeterinarias.ts
-
-export class Veterinaria {
-    constructor(public id: string, public nombre: string, public direccion: string) { }
-}
-
-export class Cliente {
-    constructor(public id: string, public nombre: string, public telefono: string, public numeroVisitas: number = 0) {
-        this.esVip = this.numeroVisitas >= 5;
-    }
-
-    esVip: boolean;
-
-    incrementarVisitas() {
-        this.numeroVisitas++;
-        this.esVip = this.numeroVisitas >= 5;
-    }
-}
-
-export class Paciente {
-    constructor(public id: string, public nombre: string, public especie: string, public idPropietario: string) { }
-}
-
-export class Proveedor {
-    constructor(public id: string, public nombre: string, public contacto: string) { }
-}
+import { Cliente } from "./Clientes";
+import { Paciente } from "./Paciente";
+import { Proveedor } from "./Proveedor";
+import { Veterinaria } from "./Veterinaria";
 
 export class RedVeterinarias {
-    private veterinarias: Veterinaria[] = [];
-    private clientes: Cliente[] = [];
-    private pacientes: Paciente[] = [];
-    private proveedores: Proveedor[] = [];
+  private veterinarias: Veterinaria[] = [];
+  private proveedores: Proveedor[] = [];
 
-    // Método para obtener la lista de clientes
-    obtenerClientes(): Cliente[] {
-        return this.clientes;
-    }
+ 
+  // METODOS VETERINARIA //
 
-    agregarVeterinaria(veterinaria: Veterinaria): void {
-        this.veterinarias.push(veterinaria);
-    }
+  agregarVeterinaria(veterinaria: Veterinaria): void {
+    this.veterinarias.push(veterinaria);
+  }
 
-    agregarCliente(cliente: Cliente): void {
-        this.clientes.push(cliente);
-    }
+  //getVeterinarias() //ToDo implementar
+  //modificarVeterinaria() //ToDo implementar.
 
-    agregarPaciente(paciente: Paciente): void {
-        const existe = this.pacientes.some(pac => pac.id === paciente.id);
-        if (!existe) {
-            this.pacientes.push(paciente);
-        } else {
-            console.log(`El paciente ${paciente.nombre} ya existe.`);
-        }
-    }
+  eliminarVeterinaria(id: string): void {
+    this.veterinarias = this.veterinarias.filter((vet) => vet.getId() !== id);
+  }
 
-    agregarProveedor(proveedor: Proveedor): void {
-        this.proveedores.push(proveedor);
-    }
+ 
 
-    modificarCliente(id: string, nuevosDatos: Partial<Cliente>): void {
-        const cliente = this.clientes.find(cli => cli.id === id);
-        if (cliente) {
-            Object.assign(cliente, nuevosDatos);
-        }
-    }
+  //METODOS PROVEEDOR //
 
-    eliminarCliente(id: string): void {
-        this.clientes = this.clientes.filter(cli => cli.id !== id);
-    }
+  agregarProveedor(proveedor: Proveedor): void {
+    this.proveedores.push(proveedor);
+  }
 
-    eliminarVeterinaria(id: string): void {
-        this.veterinarias = this.veterinarias.filter(vet => vet.id !== id);
-    }
-
+  //    getProveedores() //ToDo implementar
+  //   modificarProveedor() //ToDo implementar.
+  //   eliminarProveedor() //ToDo implementar.
 }

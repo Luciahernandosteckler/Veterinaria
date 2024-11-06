@@ -1,45 +1,51 @@
-// main.ts
-
-import { RedVeterinarias, Veterinaria, Cliente, Paciente, Proveedor } from './RedVeterinarias';
+import { Cliente } from "./Clientes";
+import { Paciente } from "./Paciente";
+import { Proveedor } from "./Proveedor";
+import { Veterinaria } from "./Veterinaria";
+import { RedVeterinarias } from "./RedVeterinarias";
 
 // Crear instancia de la red de veterinarias
 const redVeterinarias = new RedVeterinarias();
 
+// Crear instancia de veterinaria
+const veterinaria1 = new Veterinaria("1", "Veterinaria A", "Calle 123"); 
+
 // 1. Agregar Veterinarias
 console.log("Agregando veterinarias...");
-redVeterinarias.agregarVeterinaria(new Veterinaria("1", "Veterinaria A", "Calle 123"));
-redVeterinarias.agregarVeterinaria(new Veterinaria("2", "Veterinaria B", "Calle 456"));
+redVeterinarias.agregarVeterinaria(veterinaria1);
 console.log("Veterinarias después de agregar:", redVeterinarias);
 
-// 2. Agregar Clientes
+// 2. Agregar Clientes a las veterinarias.
 console.log("Agregando clientes...");
-redVeterinarias.agregarCliente(new Cliente("1", "Juan", "123456789"));
-redVeterinarias.agregarCliente(new Cliente("2", "María", "987654321"));
-redVeterinarias.agregarCliente(new Cliente("3", "Pedro", "555123456")); 
-redVeterinarias.agregarCliente(new Cliente("4", "Luisa", "444987654")); 
-console.log("Clientes después de agregar:", redVeterinarias.obtenerClientes());
+veterinaria1.agregarCliente(new Cliente("1", "Juan", 123456789));
+veterinaria1.agregarCliente(new Cliente("2", "María", 987654321));
+veterinaria1.agregarCliente(new Cliente("3", "Pedro", 555123456)); 
+veterinaria1.agregarCliente(new Cliente("4", "Luisa", 444987654)); 
 
-// Mostrar si los clientes son VIP
-console.log("Estado VIP de los clientes:");
-redVeterinarias.obtenerClientes().forEach(cliente => {
-    console.log(`${cliente.nombre} es VIP: ${cliente.esVip}`);
+console.log("Clientes en veterinaria 1 después de agregar:", veterinaria1.obtenerClientes());
+
+// Mostrar si los clientes de cierta veterinaria son VIP
+console.log("Estado VIP de los clientes de veterinaria 1:");
+veterinaria1.obtenerClientes().forEach(cliente => {
+    console.log(`${cliente.getNombre()} es VIP: ${cliente.isEsVIP()}`);
 });
 
 // 3. Modificar un Cliente
-console.log("Modificando el teléfono de Juan...");
-redVeterinarias.modificarCliente("1", { telefono: "111222333" });
-console.log("Clientes después de modificar:", redVeterinarias);
+// console.log("Modificando el teléfono de Juan...");
+// veterinaria1.modificarCliente("1", { telefono: 111222333 });
+// console.log("Clientes después de modificar:", redVeterinarias);
 
 // 4. Eliminar un Cliente
 console.log("Eliminando el cliente Juan...");
-redVeterinarias.eliminarCliente("1"); 
-console.log("Clientes después de eliminar:", redVeterinarias);
+veterinaria1.eliminarCliente("1"); 
+console.log("Clientes después de eliminar:", veterinaria1);
 
 // 5. Agregar Pacientes
 console.log("Agregando pacientes...");
-redVeterinarias.agregarPaciente(new Paciente("1", "Fido", "Perro", "2"));
-redVeterinarias.agregarPaciente(new Paciente("2", "Miau", "Gato", "2"));
-console.log("Pacientes después de agregar:", redVeterinarias);
+veterinaria1.agregarPaciente(new Paciente("1", "Fido", "Perro", "2"));
+veterinaria1.agregarPaciente(new Paciente("2", "Miau", "Gato", "2"));
+
+console.log("Pacientes después de agregar:", veterinaria1);
 
 // 6. Agregar Proveedores
 console.log("Agregando proveedores...");
@@ -49,5 +55,6 @@ console.log("Proveedores después de agregar:", redVeterinarias);
 
 //Tablas
 
-console.table(redVeterinarias.obtenerClientes());
+console.table(veterinaria1.obtenerClientes());
+
 
