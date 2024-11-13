@@ -15,6 +15,11 @@ export class RedVeterinarias {
   }
 
   //getVeterinarias() //ToDo implementar
+
+  getVeterinarias(): Veterinaria[] {
+    return [...this.veterinarias];
+  }
+  
   //modificarVeterinaria() //ToDo implementar.
 
   eliminarVeterinaria(id: string): void {
