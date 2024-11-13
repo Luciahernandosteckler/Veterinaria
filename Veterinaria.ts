@@ -3,7 +3,7 @@ import { Paciente } from "./Paciente";
 
 export class Veterinaria {
   private id: string;
-  public nombre: string;
+  private nombre: string;
   private direccion: string;
   private clientes: Cliente[] = [];
   private pacientes: Paciente[] = [];

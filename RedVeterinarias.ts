@@ -25,7 +25,7 @@ export class RedVeterinarias {
   modificarVeterinaria(nombre: string, datosActualizados: Partial<Veterinaria>): boolean {
     // Busca la veterinaria por nombre
   
-    const veterinaria = this.veterinarias.find(vet => vet.nombre === nombre);
+    const veterinaria = this.veterinarias.find(vet => vet.getNombre() === nombre);
 
     if (veterinaria) {
       // Actualiza las propiedades existentes de la veterinaria
