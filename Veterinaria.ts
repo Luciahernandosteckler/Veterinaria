@@ -24,11 +24,12 @@ export class Veterinaria {
     this.clientes.push(cliente);
   }
 
-  modificarCliente(id: string, nuevosDatos: Partial<Cliente>): void {
-    const cliente = this.clientes.find((cli) => cli.getId() === id);
-    if (cliente) {
-      Object.assign(cliente, nuevosDatos);
-    }
+  modificarCliente(id: string, clienteNuevo:Cliente):void{
+    //Buscamos el cliente que corresponda al id ingresado por parametro.
+    let cliente = this.clientes.find((cli) => cli.getId() === id);
+
+    //Se reemplaza el antiguo cliente por el nuevo cliente ingresado por parametro
+    cliente = clienteNuevo;
   }
 
   eliminarCliente(id: string): void {
