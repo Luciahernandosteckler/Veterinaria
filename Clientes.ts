@@ -1,13 +1,15 @@
 export class Cliente {
   private id: string;
   private nombre: string;
+  private dni : number;
   private telefono: number;
   private numeroVisitas: number = 0;
   private esVIP: boolean = false;
 
-  constructor(id: string, nombre: string, telefono: number) {
+  constructor(id: string, nombre: string, dni:number, telefono: number) {
     this.id = id;
     this.nombre = nombre;
+    this.dni = dni;
     this.telefono = telefono;
   }
 
@@ -34,6 +36,14 @@ export class Cliente {
 
   public setNombre(nombre: string): void {
     this.nombre = nombre;
+  }
+
+  public getDni(): number {
+    return this.dni;
+  }
+
+  public setDni(dni: number): void {
+    this.dni = dni;
   }
 
   public getTelefono(): number {
