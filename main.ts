@@ -3,6 +3,7 @@ import { Paciente } from "./Paciente";
 import { Proveedor } from "./Proveedor";
 import { Veterinaria } from "./Veterinaria";
 import { RedVeterinarias } from "./RedVeterinarias";
+import {GestorPrograma} from "./GestorPrograma";
 
 // Crear instancia de la red de veterinarias
 const redVeterinarias = new RedVeterinarias();
@@ -17,10 +18,11 @@ console.log("Veterinarias después de agregar:", redVeterinarias);
 
 // 2. Agregar Clientes a las veterinarias.
 console.log("Agregando clientes...");
-veterinaria1.agregarCliente(new Cliente("1", "Juan", 123456789));
-veterinaria1.agregarCliente(new Cliente("2", "María", 987654321));
-veterinaria1.agregarCliente(new Cliente("3", "Pedro", 555123456)); 
-veterinaria1.agregarCliente(new Cliente("4", "Luisa", 444987654)); 
+veterinaria1.agregarCliente(new Cliente("1", "Juan", 15550055, 12345678));
+veterinaria1.agregarCliente(new Cliente("2", "María", 12312323, 98765421));
+veterinaria1.agregarCliente(new Cliente("3", "Pedro", 12312322, 55512456)); 
+veterinaria1.agregarCliente(new Cliente("4", "Luisa", 12312324, 44497654)); 
+veterinaria1.agregarCliente(new Cliente("5", "Pascual", 15434343, 22333123));
 
 console.log("Clientes en veterinaria 1 después de agregar:", veterinaria1.obtenerClientes());
 
@@ -56,5 +58,9 @@ console.log("Proveedores después de agregar:", redVeterinarias);
 //Tablas
 
 console.table(veterinaria1.obtenerClientes());
+
+const gestor = new GestorPrograma("Gestor");
+
+gestor.opcionesGestorVeterinarias();
 
 

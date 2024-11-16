@@ -1,30 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Proveedor = void 0;
-class Proveedor {
-    constructor(id, nombre, contacto) {
+var Proveedor = /** @class */ (function () {
+    function Proveedor(id, nombre, contacto) {
         this.id = id;
         this.nombre = nombre;
         this.contacto = contacto;
     }
     //GETTERS Y SETTERS
-    getId() {
+    Proveedor.prototype.getId = function () {
         return this.id;
-    }
-    setId(id) {
+    };
+    Proveedor.prototype.setId = function (id) {
         this.id = id;
-    }
-    getNombre() {
+    };
+    Proveedor.prototype.getNombre = function () {
         return this.nombre;
-    }
-    setNombre(nombre) {
+    };
+    Proveedor.prototype.setNombre = function (nombre) {
         this.nombre = nombre;
-    }
-    getContacto() {
+    };
+    Proveedor.prototype.getContacto = function () {
         return this.contacto;
-    }
-    setContacto(contacto) {
+    };
+    Proveedor.prototype.setContacto = function (contacto) {
         this.contacto = contacto;
-    }
-}
+    };
+    return Proveedor;
+}());
 exports.Proveedor = Proveedor;

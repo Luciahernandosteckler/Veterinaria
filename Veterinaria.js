@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Veterinaria = void 0;
-class Veterinaria {
-    constructor(id, nombre, direccion) {
+var Veterinaria = /** @class */ (function () {
+    function Veterinaria(id, nombre, direccion) {
         this.clientes = [];
         this.pacientes = [];
         this.id = id;
@@ -10,52 +10,53 @@ class Veterinaria {
         this.direccion = direccion;
     }
     // METODOS CLIENTE //
-    obtenerClientes() {
+    Veterinaria.prototype.obtenerClientes = function () {
         return this.clientes;
-    }
-    agregarCliente(cliente) {
+    };
+    Veterinaria.prototype.agregarCliente = function (cliente) {
         this.clientes.push(cliente);
-    }
-    modificarCliente(id, nuevosDatos) {
-        const cliente = this.clientes.find((cli) => cli.getId() === id);
-        if (cliente) {
-            Object.assign(cliente, nuevosDatos);
-        }
-    }
-    eliminarCliente(id) {
-        this.clientes = this.clientes.filter((cli) => cli.getId() !== id);
-    }
+    };
+    Veterinaria.prototype.modificarCliente = function (id, clienteNuevo) {
+        //Buscamos el cliente que corresponda al id ingresado por parametro.
+        var cliente = this.clientes.find(function (cli) { return cli.getId() === id; });
+        //Se reemplaza el antiguo cliente por el nuevo cliente ingresado por parametro
+        cliente = clienteNuevo;
+    };
+    Veterinaria.prototype.eliminarCliente = function (id) {
+        this.clientes = this.clientes.filter(function (cli) { return cli.getId() !== id; });
+    };
     // METODOS PACIENTE //
-    agregarPaciente(paciente) {
-        const idPaciente = paciente.getId();
-        const existe = this.pacientes.some((pac) => pac.getId() === idPaciente);
+    Veterinaria.prototype.agregarPaciente = function (paciente) {
+        var idPaciente = paciente.getId();
+        var existe = this.pacientes.some(function (pac) { return pac.getId() === idPaciente; });
         if (!existe) {
             this.pacientes.push(paciente);
         }
         else {
-            console.log(`El paciente ${paciente.getNombre()} ya existe.`);
+            console.log("El paciente ".concat(paciente.getNombre(), " ya existe."));
         }
-    }
+    };
     // eliminarPaciente(paciente: Paciente): void{}; //ToDo implementar.
     // modificarPaciente(paciente: Paciente): void{}; //ToDo implementar
     //GETTERS Y SETTERS
-    getId() {
+    Veterinaria.prototype.getId = function () {
         return this.id;
-    }
-    setId(id) {
+    };
+    Veterinaria.prototype.setId = function (id) {
         this.id = id;
-    }
-    getNombre() {
+    };
+    Veterinaria.prototype.getNombre = function () {
         return this.nombre;
-    }
-    setNombre(nombre) {
+    };
+    Veterinaria.prototype.setNombre = function (nombre) {
         this.nombre = nombre;
-    }
-    getDireccion() {
+    };
+    Veterinaria.prototype.getDireccion = function () {
         return this.direccion;
-    }
-    setDireccion(direccion) {
+    };
+    Veterinaria.prototype.setDireccion = function (direccion) {
         this.direccion = direccion;
-    }
-}
+    };
+    return Veterinaria;
+}());
 exports.Veterinaria = Veterinaria;

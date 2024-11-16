@@ -1,16 +1,18 @@
+import {Paciente} from "./Paciente";
 export class Cliente {
   private id: string;
   private nombre: string;
-  private dni : number;
   private telefono: number;
+  private dni : number;
+  private mascotas : Paciente[] = []
   private numeroVisitas: number = 0;
   private esVIP: boolean = false;
 
-  constructor(id: string, nombre: string, dni:number, telefono: number) {
+  constructor(id: string, nombre: string, telefono: number, dni:number) {
     this.id = id;
     this.nombre = nombre;
-    this.dni = dni;
     this.telefono = telefono;
+    this.dni = dni;
   }
 
   //METODOS
@@ -44,6 +46,14 @@ export class Cliente {
 
   public setDni(dni: number): void {
     this.dni = dni;
+  }
+
+  public getMascotas():Paciente[]{
+    return this.mascotas;
+  }
+
+  public setMascotas(mascota:Paciente){
+    this.mascotas.push(mascota);
   }
 
   public getTelefono(): number {
