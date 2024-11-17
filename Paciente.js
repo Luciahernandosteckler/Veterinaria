@@ -1,38 +1,41 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Paciente = void 0;
-var Paciente = /** @class */ (function () {
-    function Paciente(id, nombre, especie, idPropietario) {
-        this.id = id;
+class Paciente {
+    constructor(nombre, especie, idPropietario) {
+        this.id = Paciente.incrementarId();
         this.nombre = nombre;
         this.especie = especie;
         this.idPropietario = idPropietario;
     }
+    static incrementarId() {
+        return (++this.idActual).toString();
+    }
     //GETTERS Y SETTERS
-    Paciente.prototype.getId = function () {
+    getId() {
         return this.id;
-    };
-    Paciente.prototype.setId = function (id) {
+    }
+    setId(id) {
         this.id = id;
-    };
-    Paciente.prototype.getNombre = function () {
+    }
+    getNombre() {
         return this.nombre;
-    };
-    Paciente.prototype.setNombre = function (nombre) {
+    }
+    setNombre(nombre) {
         this.nombre = nombre;
-    };
-    Paciente.prototype.getEspecie = function () {
+    }
+    getEspecie() {
         return this.especie;
-    };
-    Paciente.prototype.setEspecie = function (especie) {
+    }
+    setEspecie(especie) {
         this.especie = especie;
-    };
-    Paciente.prototype.getIdPropietario = function () {
+    }
+    getIdPropietario() {
         return this.idPropietario;
-    };
-    Paciente.prototype.setIdPropietario = function (idPropietario) {
+    }
+    setIdPropietario(idPropietario) {
         this.idPropietario = idPropietario;
-    };
-    return Paciente;
-}());
+    }
+}
 exports.Paciente = Paciente;
+Paciente.idActual = 0;

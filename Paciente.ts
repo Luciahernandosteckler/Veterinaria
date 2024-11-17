@@ -5,15 +5,20 @@ export class Paciente {
   private idPropietario: string;
 
   constructor(
-    id: string,
     nombre: string,
     especie: string,
     idPropietario: string
   ) {
-    this.id = id;
+    this.id = Paciente.incrementarId();
     this.nombre = nombre;
     this.especie = especie;
     this.idPropietario = idPropietario;
+  }
+
+  static idActual = 0;
+  
+  static incrementarId(): string {
+    return (++this.idActual).toString();
   }
 
   //GETTERS Y SETTERS

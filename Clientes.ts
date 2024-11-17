@@ -7,12 +7,18 @@ export class Cliente {
   private mascotas : Paciente[] = []
   private numeroVisitas: number = 0;
   private esVIP: boolean = false;
-
-  constructor(id: string, nombre: string, telefono: number, dni:number) {
-    this.id = id;
+  
+  constructor(nombre: string, telefono: number, dni:number) {
     this.nombre = nombre;
     this.telefono = telefono;
     this.dni = dni;
+    this.id = Cliente.incrementarId();
+  }
+  
+  static idActual = 0;
+  
+  static incrementarId(): string {
+    return (++this.idActual).toString();
   }
 
   //METODOS
