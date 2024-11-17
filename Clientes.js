@@ -1,64 +1,67 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Cliente = void 0;
-var Cliente = /** @class */ (function () {
-    function Cliente(id, nombre, telefono, dni) {
+class Cliente {
+    constructor(nombre, telefono, dni) {
         this.mascotas = [];
         this.numeroVisitas = 0;
         this.esVIP = false;
-        this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;
         this.dni = dni;
+        this.id = Cliente.incrementarId();
+    }
+    static incrementarId() {
+        return (++this.idActual).toString();
     }
     //METODOS
-    Cliente.prototype.incrementarVisitas = function () {
+    incrementarVisitas() {
         this.numeroVisitas++;
         this.esVIP = this.numeroVisitas >= 5;
-    };
+    }
     //GETTERS Y SETTERS
-    Cliente.prototype.getId = function () {
+    getId() {
         return this.id;
-    };
-    Cliente.prototype.setId = function (id) {
+    }
+    setId(id) {
         this.id = id;
-    };
-    Cliente.prototype.getNombre = function () {
+    }
+    getNombre() {
         return this.nombre;
-    };
-    Cliente.prototype.setNombre = function (nombre) {
+    }
+    setNombre(nombre) {
         this.nombre = nombre;
-    };
-    Cliente.prototype.getDni = function () {
+    }
+    getDni() {
         return this.dni;
-    };
-    Cliente.prototype.setDni = function (dni) {
+    }
+    setDni(dni) {
         this.dni = dni;
-    };
-    Cliente.prototype.getMascotas = function () {
+    }
+    getMascotas() {
         return this.mascotas;
-    };
-    Cliente.prototype.setMascotas = function (mascota) {
+    }
+    setMascotas(mascota) {
         this.mascotas.push(mascota);
-    };
-    Cliente.prototype.getTelefono = function () {
+    }
+    getTelefono() {
         return this.telefono;
-    };
-    Cliente.prototype.setTelefono = function (telefono) {
+    }
+    setTelefono(telefono) {
         this.telefono = telefono;
-    };
-    Cliente.prototype.getNumeroVisitas = function () {
+    }
+    getNumeroVisitas() {
         return this.numeroVisitas;
-    };
-    Cliente.prototype.setNumeroVisitas = function (numeroVisitas) {
+    }
+    setNumeroVisitas(numeroVisitas) {
         this.numeroVisitas = numeroVisitas;
-    };
-    Cliente.prototype.isEsVIP = function () {
+    }
+    isEsVIP() {
         return this.esVIP;
-    };
-    Cliente.prototype.setEsVIP = function (esVIP) {
+    }
+    setEsVIP(esVIP) {
         this.esVIP = esVIP;
-    };
-    return Cliente;
-}());
+    }
+}
 exports.Cliente = Cliente;
+Cliente.idActual = 0;

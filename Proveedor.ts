@@ -3,10 +3,16 @@ export class Proveedor {
   private nombre: string;
   private contacto: string;
 
-  constructor(id: string, nombre: string, contacto: string) {
-    this.id = id;
+  constructor(nombre: string, contacto: string) {
+    this.id = Proveedor.incrementarId();
     this.nombre = nombre;
     this.contacto = contacto;
+  }
+
+  static idActual = 0;
+  
+  static incrementarId(): string {
+    return (++this.idActual).toString();
   }
 
   //GETTERS Y SETTERS

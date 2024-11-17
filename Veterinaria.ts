@@ -8,10 +8,16 @@ export class Veterinaria {
   private clientes: Cliente[] = [];
   private pacientes: Paciente[] = [];
 
-  constructor(id: string, nombre: string, direccion: string) {
-    this.id = id;
+  constructor(nombre: string, direccion: string) {
+    this.id = Veterinaria.incrementarId();
     this.nombre = nombre;
     this.direccion = direccion;
+  }
+
+  static idActual = 0;
+  
+  static incrementarId(): string {
+    return (++this.idActual).toString();
   }
 
    // METODOS CLIENTE //

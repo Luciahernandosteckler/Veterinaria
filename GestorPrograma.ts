@@ -149,7 +149,7 @@ export class GestorPrograma{
         let especie =  rls.question("Ingrese Especie de su Mascota: ");
         let idPropietario = cliente.getId();
 
-        const mascota : Paciente = new Paciente (id, nombre, especie, idPropietario);
+        const mascota : Paciente = new Paciente (nombre, especie, idPropietario);
         cliente.setMascotas(mascota);
         console.log("Mascota Agregada Exitosamente")
         this.esperarEnter();
@@ -172,7 +172,7 @@ export class GestorPrograma{
         let nombre:string = rls.question("Ingrese su Nombre: ");
         let telefono:number=rls.questionInt("Ingrese su Telefono: ");
 
-        const cliente : Cliente = new Cliente (id, nombre, telefono, dni);
+        const cliente : Cliente = new Cliente (nombre, telefono, dni);
         this.listaClientes.push(cliente);
         console.log("Cliente Creado Exitosamente")
         this.esperarEnter();
@@ -207,7 +207,7 @@ export class GestorPrograma{
         let calle: string = rls.question("Calle: ");
         let numero : number = rls.questionInt("Numero: ");
         let direccion : string = `${calle} : ${numero}`;
-        const veterinaria = new Veterinaria(id, nombre, direccion);
+        const veterinaria = new Veterinaria(nombre, direccion);
         this.listaVeterinarias.push(veterinaria);
         console.log(`Veterinaria: ${veterinaria.getNombre()}, Agregada Exitosamente`);
         this.esperarEnter();
