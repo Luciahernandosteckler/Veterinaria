@@ -5,7 +5,7 @@ class Paciente {
     constructor(nombre, especie, idPropietario) {
         this.id = Paciente.incrementarId();
         this.nombre = nombre;
-        this.especie = especie;
+        this.setEspecie(especie);
         this.idPropietario = idPropietario;
     }
     static incrementarId() {
@@ -28,7 +28,12 @@ class Paciente {
         return this.especie;
     }
     setEspecie(especie) {
-        this.especie = especie;
+        if (especie != "perro" && especie != "gato") {
+            this.especie = "exotica";
+        }
+        else {
+            this.especie = especie;
+        }
     }
     getIdPropietario() {
         return this.idPropietario;
