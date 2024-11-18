@@ -1,7 +1,7 @@
 export class Paciente {
   private id: string;
   private nombre: string;
-  private especie: string;
+  private especie!: string;
   private idPropietario: string;
 
   constructor(
@@ -11,7 +11,7 @@ export class Paciente {
   ) {
     this.id = Paciente.incrementarId();
     this.nombre = nombre;
-    this.especie = especie;
+    this.setEspecie(especie);
     this.idPropietario = idPropietario;
   }
 
@@ -44,7 +44,11 @@ export class Paciente {
   }
 
   public setEspecie(especie: string): void {
-    this.especie = especie;
+    if(especie != "perro" && especie != "gato"){
+      this.especie = "exotica";
+    }else{
+      this.especie = especie;
+    }
   }
 
   public getIdPropietario(): string {
