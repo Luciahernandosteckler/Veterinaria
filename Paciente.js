@@ -1,46 +1,47 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Paciente = void 0;
-class Paciente {
-    constructor(nombre, especie, idPropietario) {
+var Paciente = /** @class */ (function () {
+    function Paciente(nombre, especie, idPropietario) {
         this.id = Paciente.incrementarId();
         this.nombre = nombre;
         this.setEspecie(especie);
         this.idPropietario = idPropietario;
     }
-    static incrementarId() {
+    Paciente.incrementarId = function () {
         return (++this.idActual).toString();
-    }
+    };
     //GETTERS Y SETTERS
-    getId() {
+    Paciente.prototype.getId = function () {
         return this.id;
-    }
-    setId(id) {
+    };
+    Paciente.prototype.setId = function (id) {
         this.id = id;
-    }
-    getNombre() {
+    };
+    Paciente.prototype.getNombre = function () {
         return this.nombre;
-    }
-    setNombre(nombre) {
+    };
+    Paciente.prototype.setNombre = function (nombre) {
         this.nombre = nombre;
-    }
-    getEspecie() {
+    };
+    Paciente.prototype.getEspecie = function () {
         return this.especie;
-    }
-    setEspecie(especie) {
+    };
+    Paciente.prototype.setEspecie = function (especie) {
         if (especie != "perro" && especie != "gato") {
             this.especie = "exotica";
         }
         else {
             this.especie = especie;
         }
-    }
-    getIdPropietario() {
+    };
+    Paciente.prototype.getIdPropietario = function () {
         return this.idPropietario;
-    }
-    setIdPropietario(idPropietario) {
+    };
+    Paciente.prototype.setIdPropietario = function (idPropietario) {
         this.idPropietario = idPropietario;
-    }
-}
+    };
+    Paciente.idActual = 0;
+    return Paciente;
+}());
 exports.Paciente = Paciente;
-Paciente.idActual = 0;
