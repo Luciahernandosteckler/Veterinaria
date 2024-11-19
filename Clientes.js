@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Cliente = void 0;
-class Cliente {
-    constructor(nombre, telefono, dni) {
+var Cliente = /** @class */ (function () {
+    function Cliente(nombre, telefono, dni) {
         this.mascotas = [];
         this.numeroVisitas = 0;
         this.esVIP = false;
@@ -11,57 +11,58 @@ class Cliente {
         this.dni = dni;
         this.id = Cliente.incrementarId();
     }
-    static incrementarId() {
+    Cliente.incrementarId = function () {
         return (++this.idActual).toString();
-    }
+    };
     //METODOS
-    incrementarVisitas() {
+    Cliente.prototype.incrementarVisitas = function () {
         this.numeroVisitas++;
         this.esVIP = this.numeroVisitas >= 5;
-    }
+    };
     //GETTERS Y SETTERS
-    getId() {
+    Cliente.prototype.getId = function () {
         return this.id;
-    }
-    setId(id) {
+    };
+    Cliente.prototype.setId = function (id) {
         this.id = id;
-    }
-    getNombre() {
+    };
+    Cliente.prototype.getNombre = function () {
         return this.nombre;
-    }
-    setNombre(nombre) {
+    };
+    Cliente.prototype.setNombre = function (nombre) {
         this.nombre = nombre;
-    }
-    getDni() {
+    };
+    Cliente.prototype.getDni = function () {
         return this.dni;
-    }
-    setDni(dni) {
+    };
+    Cliente.prototype.setDni = function (dni) {
         this.dni = dni;
-    }
-    getMascotas() {
+    };
+    Cliente.prototype.getMascotas = function () {
         return this.mascotas;
-    }
-    setMascotas(mascota) {
+    };
+    Cliente.prototype.setMascotas = function (mascota) {
         this.mascotas.push(mascota);
-    }
-    getTelefono() {
+    };
+    Cliente.prototype.getTelefono = function () {
         return this.telefono;
-    }
-    setTelefono(telefono) {
+    };
+    Cliente.prototype.setTelefono = function (telefono) {
         this.telefono = telefono;
-    }
-    getNumeroVisitas() {
+    };
+    Cliente.prototype.getNumeroVisitas = function () {
         return this.numeroVisitas;
-    }
-    setNumeroVisitas(numeroVisitas) {
+    };
+    Cliente.prototype.setNumeroVisitas = function (numeroVisitas) {
         this.numeroVisitas = numeroVisitas;
-    }
-    isEsVIP() {
+    };
+    Cliente.prototype.isEsVIP = function () {
         return this.esVIP;
-    }
-    setEsVIP(esVIP) {
+    };
+    Cliente.prototype.setEsVIP = function (esVIP) {
         this.esVIP = esVIP;
-    }
-}
+    };
+    Cliente.idActual = 0;
+    return Cliente;
+}());
 exports.Cliente = Cliente;
-Cliente.idActual = 0;

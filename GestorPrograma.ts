@@ -17,10 +17,10 @@ export class GestorPrograma{
     
     //Menu principal identificacion (Administrador o Cliente)
     public opcionesGestorVeterinarias(): void {
-        //console.clear()
+        //console.clear();
         let opcionSeleccionada: number;
         this.mensajeOpciones("Bienvenido al Gestor de Veterinarias");
-        do {
+        do{
             opcionSeleccionada = this.menuOpciones(" 1 - Soy Administrador \n 2 - Soy Cliente\n 3 - Salir", 1, 3);
             switch (opcionSeleccionada) {
                 case 1: this.ejecutarComoAdministrador(); break;
@@ -28,7 +28,7 @@ export class GestorPrograma{
                 case 3: console.log("Saliendo..."); break;
                 default: console.log("Error de Datos");
             }
-        } while (opcionSeleccionada !== 3);
+        } while (opcionSeleccionada !==3);
     }
 
     //Menu para Administradores
@@ -36,7 +36,7 @@ export class GestorPrograma{
         console.clear();
         let opcionSeleccionada: number;
         this.mensajeOpciones("Bienvenido administrador");
-        do {
+        do{
             opcionSeleccionada = this.menuOpciones(" 1 - Gestor de Veterinarias \n 2 - Gestor de Proovedores\n 3 - Gestor de Clientes\n 4 - Gestor de Pacientes \n 5 - Volver ", 1, 5);
             switch (opcionSeleccionada) {
                 case 1: this.gestorVeterinarias(); break;
@@ -48,8 +48,7 @@ export class GestorPrograma{
                         break;
                 default: console.log("Error de Datos");
             }
-        } while (opcionSeleccionada !== 5);
-
+        } while (opcionSeleccionada !==5);
     };
 
     //Comprueba si el cliente existe ya o no y dependiende de eso le muestra un Menu diferente
@@ -64,7 +63,6 @@ export class GestorPrograma{
         }else{
             let opcionSeleccionada:number;
             this.mensajeOpciones("No se encontro ningun cliente con dicho Dni");
-        do {
             opcionSeleccionada = this.menuOpciones(" 1 - Crear nuevo Cliente \n 2 - Ingresar Dni nuevamente\n 3 - Volver", 1, 3);
             switch (opcionSeleccionada) {
                 case 1: this.crearNuevoCliente(dniCliente); break;
@@ -76,7 +74,6 @@ export class GestorPrograma{
                         break;
                 default: console.log("Error de Datos");
             }
-        } while (opcionSeleccionada !== 3);
             
         }
         }else{
@@ -107,8 +104,8 @@ export class GestorPrograma{
         let opcionSeleccionada: number;
         this.mensajeOpciones("Bienvenido "+ cliente.getNombre());
         if (cliente.getMascotas().length<=0 || cliente.getNumeroVisitas() == 0){
-            do {
-                opcionSeleccionada = this.menuOpciones(" 1 - Datos Personales \n 2 - Mis Mascotas\n 3 - Volver", 1, 3);
+            opcionSeleccionada = this.menuOpciones(" 1 - Datos Personales \n 2 - Mis Mascotas\n 3 - Volver", 1, 3);
+            do {    
                 switch (opcionSeleccionada) {
                     case 1: console.log(` Nombre: ${cliente.getNombre()}\n Dni: ${cliente.getDni()}\n Telefono ${cliente.getTelefono()}`); 
                             this.esperarEnter();
@@ -122,12 +119,12 @@ export class GestorPrograma{
                             this.esperarEnter();
                              break;
                     case 3: console.log("Volviendo..."); break;
-                    default: console.log("Error de Datos");
+                    default: console.log("Error de Datos");    
                 }
-            } while (opcionSeleccionada !== 3);
+            } while (opcionSeleccionada !==3);
         }else{
-            do {
                 opcionSeleccionada = this.menuOpciones(" 1 - Datos Personales \n 2 - Mis Mascotas\n 3- Salir", 1, 3);
+                do {
                 switch (opcionSeleccionada) {
                     case 1: console.log(` Nombre: ${cliente.getNombre()}\n Dni: ${cliente.getDni()}\n Telefono ${cliente.getTelefono()}`);
                             this.esperarEnter();
@@ -138,7 +135,7 @@ export class GestorPrograma{
                     case 3: console.log("Saliendo..."); break;
                     default: console.log("Error de Datos");
                 }
-            } while (opcionSeleccionada !== 3);
+            } while (opcionSeleccionada !==3);    
         }
     }  
 
@@ -195,8 +192,7 @@ export class GestorPrograma{
                         break;
                 default: console.log("Error de Datos");
             }
-        } while (opcionSeleccionada !== 5);
-
+        } while ( opcionSeleccionada !== 5);
     };
     //CRUD Veterinarias
     private crearVeterinaria(){
@@ -212,6 +208,11 @@ export class GestorPrograma{
         console.log(`Veterinaria: ${veterinaria.getNombre()}, Agregada Exitosamente`);
         this.esperarEnter();
         console.clear();
+        if (rls.keyInYNStrict(`Desea agregar otra: ${veterinaria.constructor.name}`)) {
+           //Ejecuta nuevamente el Metodo crearVeterinaria 
+            this.crearVeterinaria();
+        }
+        
     }
     private listarVeterinarias() {
         console.clear();
@@ -226,6 +227,22 @@ export class GestorPrograma{
         this.esperarEnter();
         console.clear();
     }
+
+    private listarVeterinarias2() {
+        console.clear();
+        if (this.listaVeterinarias.length === 0) {
+            console.log("No hay veterinarias registradas.");
+        } else {
+            console.log("\n--- Lista de Veterinarias ---");
+            this.listaVeterinarias.forEach((vet, index) => {
+                console.log(`${index + 1}. Veterinaria: ${vet.getNombre()} Direccion - ${vet.getDireccion()}`);
+            });
+        }
+        this.esperarEnter();
+        console.clear();
+        this.modificarVeterinaria();
+    }
+
     private modificarVeterinaria(){
         this.listarVeterinarias();
         let id:number = rls.questionInt("Ingrese el numero de la Veterinaria que desee modificar: ")-1;
@@ -235,7 +252,7 @@ export class GestorPrograma{
         }else{
         let veterinaria : Veterinaria = this.listaVeterinarias[id];
         console.log(`Veterinaria: ${veterinaria.getNombre()} Direccion: ${veterinaria.getDireccion()}`)
-            let nuevoNombre: string = rls.question("Ingrese nueva nombre (o presione Enter para no modificar): ");
+            let nuevoNombre: string = rls.question("Ingrese nuevo nombre (o presione Enter para no modificar): ");
             let nuevaCalle: string = rls.question("Ingrese nueva calle (o presione Enter para no modificar): ");
             let nuevaNumeracion: number = rls.questionInt("Ingrese nueva numeracion (o ingrese 0 para no modificar): ");
 
@@ -249,6 +266,10 @@ export class GestorPrograma{
                 };
                 this.esperarEnter();
                 console.clear();
+                if (rls.keyInYNStrict(`Desea modificar otra: ${veterinaria.constructor.name}`)) {
+                    //Ejecuta nuevamente el Metodo modificarVeterinaria 
+                     this.modificarVeterinaria();
+                 }
         }
     }
     private eliminarVeterinaria(){
@@ -261,13 +282,17 @@ export class GestorPrograma{
         let veterinaria : Veterinaria = this.listaVeterinarias[id];
         console.log(`Veterinaria: ${veterinaria.getNombre()} Direccion: ${veterinaria.getDireccion()}`)
             let opcionSeleccionada:number;
-            if (rls.keyInYNStrict(`¿Está seguro que desea eliminar la ${veterinaria.constructor.name}?`)) {
+            if (rls.keyInYNStrict(`Esta seguro que desea eliminar la ${veterinaria.constructor.name}`)) {
                 // Elimina el vehículo de la lista
                 this.listaVeterinarias = this.listaVeterinarias.filter(v => v !== veterinaria);
                 console.log(`${veterinaria.constructor.name} eliminado con éxito.`);
             } else {
                 console.log("Eliminación cancelada.");
             }
+            if (rls.keyInYNStrict(`Desea eliminar otra: ${veterinaria.constructor.name}`)) {
+                //Ejecuta nuevamente el Metodo eliminarVeterinaria 
+                 this.eliminarVeterinaria();
+             }
         }
 
     }
@@ -275,7 +300,7 @@ export class GestorPrograma{
 
     }
     private gestorProveedores(){
-        console.clear()
+        console.clear();
         let opcionSeleccionada: number;
         this.mensajeOpciones("Aqui podra Crear o Modificar Proveedores");
         do {
@@ -290,8 +315,7 @@ export class GestorPrograma{
                         break;
                 default: console.log("Error de Datos");
             }
-        } while (opcionSeleccionada !== 5);
-
+        } while (opcionSeleccionada !==5);
     };
     //CRUD Proveedores
     private crearProveedor(){}
@@ -300,11 +324,11 @@ export class GestorPrograma{
     private eliminarProveedor(){}
 
     private gestorClientes(){
-        console.clear()
+        console.clear();
         let opcionSeleccionada: number;
         this.mensajeOpciones("Aqui podra Crear o Modificar Clientes");
-        do {
             opcionSeleccionada = this.menuOpciones(" 1 - Crear nueva Cliente \n 2 - Ver Lista de Clientes\n 3 - Modificar Cliente \n 4 - Eliminar Cliente\n 5 - Volver", 1, 5);
+            do {
             switch (opcionSeleccionada) {
                 case 1: this.crearCliente(); break;
                 case 2: this.listarClientes(); break;
@@ -315,8 +339,7 @@ export class GestorPrograma{
                         break;
                 default: console.log("Error de Datos");
             }
-        } while (opcionSeleccionada !== 5);
-
+        } while (opcionSeleccionada !==5);
     };
     //CRUD Clientes
     private crearCliente(){}
@@ -325,11 +348,11 @@ export class GestorPrograma{
     private eliminarCliente(){}
 
     private gestorPacientes(){
-        console.clear()
+        console.clear();
         let opcionSeleccionada: number;
         this.mensajeOpciones("Aqui podra Crear o Modificar Pacientes");
-        do {
             opcionSeleccionada = this.menuOpciones(" 1 - Crear nueva Paciente \n 2 - Ver Lista de Pacientes\n 3 - Modificar Paciente \n 4 - Eliminar Paciente\n 5 - Volver", 1, 5);
+            do {
             switch (opcionSeleccionada) {
                 case 1: this.crearPaciente(); break;
                 case 2: this.listarPacientes(); break;
@@ -340,8 +363,7 @@ export class GestorPrograma{
                         break;
                 default: console.log("Error de Datos");
             }
-        } while (opcionSeleccionada !== 5);
-
+        } while (opcionSeleccionada !==5);
     };
     //CRUD Pacientes
     private crearPaciente(){}
@@ -355,6 +377,7 @@ export class GestorPrograma{
         do {
             console.log(mensaje);
             opcionSeleccionada = rls.questionInt("Ingrese la Opcion que Desee: ");
+            console.clear();
         } while (opcionSeleccionada < min || opcionSeleccionada > max);
         return opcionSeleccionada;
     }
