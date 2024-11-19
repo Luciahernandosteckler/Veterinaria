@@ -1,12 +1,14 @@
 import { Cliente } from "./Clientes";
 import { Paciente } from "./Paciente";
+import { Proveedor } from "./Proveedor";
 
 export class Veterinaria {
   private id: string;
   private nombre: string;
   private direccion: string;
-  private clientes: Cliente[] = [];
-  private pacientes: Paciente[] = [];
+  private listaClientes: Cliente[] = [];
+  private listaPacientes:Paciente[] = []
+  private listaProveedores : Proveedor[] = [];
 
   constructor(nombre: string, direccion: string) {
     this.id = Veterinaria.incrementarId();
@@ -23,23 +25,23 @@ export class Veterinaria {
    // METODOS CLIENTE //
    
    obtenerClientes(): Cliente[] {
-    return this.clientes;
+    return this.listaClientes;
   }
 
   agregarCliente(cliente: Cliente): void {
-    this.clientes.push(cliente);
+    this.listaClientes.push(cliente);
   }
 
   modificarCliente(id: string, clienteNuevo:Cliente):void{
     //Buscamos el cliente que corresponda al id ingresado por parametro.
-    let cliente = this.clientes.find((cli) => cli.getId() === id);
+    let cliente = this.listaClientes.find((cli) => cli.getId() === id);
 
     //Se reemplaza el antiguo cliente por el nuevo cliente ingresado por parametro
     cliente = clienteNuevo;
   }
 
   eliminarCliente(id: string): void {
-    this.clientes = this.clientes.filter((cli) => cli.getId() !== id);
+    this.listaClientes = this.listaClientes.filter((cli) => cli.getId() !== id);
   }
 
 
@@ -47,9 +49,9 @@ export class Veterinaria {
 
   agregarPaciente(paciente: Paciente): void {
     const idPaciente = paciente.getId();
-    const existe = this.pacientes.some((pac) => pac.getId() === idPaciente);
+    const existe = this.listaPacientes.some((pac) => pac.getId() === idPaciente);
     if (!existe) {
-      this.pacientes.push(paciente);
+      this.listaPacientes.push(paciente);
     } else {
       console.log(`El paciente ${paciente.getNombre()} ya existe.`);
     }
@@ -82,5 +84,19 @@ export class Veterinaria {
 
   public setDireccion(direccion: string): void {
     this.direccion = direccion;
+  }
+
+  public setProveedor(proveedor : Proveedor):void{
+    this.listaProveedores.push(proveedor);
+  }
+  public getProveedor():Proveedor[]{
+    return this.listaProveedores;
+  }
+
+  public setCliente(cliente : Cliente):void{
+    this.listaClientes.push(cliente);
+  }
+  public getCliente():Cliente[]{
+    return this.listaClientes;
   }
 }

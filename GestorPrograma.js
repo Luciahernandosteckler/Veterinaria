@@ -4,6 +4,7 @@ exports.GestorPrograma = void 0;
 var rls = require("readline-sync");
 var Clientes_1 = require("./Clientes");
 var Paciente_1 = require("./Paciente");
+var Proveedor_1 = require("./Proveedor");
 var Veterinaria_1 = require("./Veterinaria");
 var GestorPrograma = /** @class */ (function () {
     function GestorPrograma(nombre) {
@@ -223,7 +224,6 @@ var GestorPrograma = /** @class */ (function () {
     //CRUD Veterinarias
     GestorPrograma.prototype.crearVeterinaria = function () {
         console.clear();
-        var id = "1";
         var nombre = rls.question("Ingrese el nombre de la Veterinaria: ");
         console.log("Ingrese Direccion de la Veterinaria: ");
         var calle = rls.question("Calle: ");
@@ -252,21 +252,6 @@ var GestorPrograma = /** @class */ (function () {
         }
         this.esperarEnter();
         console.clear();
-    };
-    GestorPrograma.prototype.listarVeterinarias2 = function () {
-        console.clear();
-        if (this.listaVeterinarias.length === 0) {
-            console.log("No hay veterinarias registradas.");
-        }
-        else {
-            console.log("\n--- Lista de Veterinarias ---");
-            this.listaVeterinarias.forEach(function (vet, index) {
-                console.log("".concat(index + 1, ". Veterinaria: ").concat(vet.getNombre(), " Direccion - ").concat(vet.getDireccion()));
-            });
-        }
-        this.esperarEnter();
-        console.clear();
-        this.modificarVeterinaria();
     };
     GestorPrograma.prototype.modificarVeterinaria = function () {
         this.listarVeterinarias();
@@ -323,14 +308,12 @@ var GestorPrograma = /** @class */ (function () {
             }
         }
     };
-    GestorPrograma.prototype.confirmarEliminacionVeterinaria = function () {
-    };
     GestorPrograma.prototype.gestorProveedores = function () {
         console.clear();
         var opcionSeleccionada;
         this.mensajeOpciones("Aqui podra Crear o Modificar Proveedores");
         do {
-            opcionSeleccionada = this.menuOpciones(" 1 - Crear nueva Proveedor \n 2 - Ver Lista de Proovedores\n 3 - Modificar Proveedor \n 4 - Eliminar Proveedor\n 5 - Volver", 1, 5);
+            opcionSeleccionada = this.menuOpciones(" 1 - Crear nuevo Proveedor \n 2 - Ver Lista de Proovedores\n 3 - Modificar Proveedor \n 4 - Eliminar Proveedor\n 5 - Volver", 1, 5);
             switch (opcionSeleccionada) {
                 case 1:
                     this.crearProveedor();
@@ -354,7 +337,37 @@ var GestorPrograma = /** @class */ (function () {
     };
     ;
     //CRUD Proveedores
-    GestorPrograma.prototype.crearProveedor = function () { };
+    GestorPrograma.prototype.crearProveedor = function () {
+        if (this.listaVeterinarias.length != 0) {
+            this.listarVeterinarias();
+            var id = rls.questionInt("Ingrese el numero de la Veterinaria al que desee asignar proveedor: ") - 1;
+            if (id < 0 || id > this.listaVeterinarias.length - 1) {
+                console.log("Numero Invalido");
+                this.esperarEnter();
+            }
+            else {
+                var veterinaria = this.listaVeterinarias[id];
+                console.log("Veterinaria: ".concat(veterinaria.getNombre(), " Direccion: ").concat(veterinaria.getDireccion()));
+                console.clear();
+                var nombre = rls.question("Ingrese el nombre del Proveedor: ");
+                var contacto = rls.question("Ingrese el numero telefonico del Proveedor: ");
+                var proveedor = new Proveedor_1.Proveedor(nombre, contacto);
+                veterinaria.setProveedor(proveedor);
+                console.log("".concat(proveedor.constructor.name, ": ").concat(proveedor.getNombre(), ", Agregado Exitosamente"));
+                this.esperarEnter();
+                console.clear();
+                if (rls.keyInYNStrict("Desea agregar otro: ".concat(proveedor.constructor.name, " a la ").concat(veterinaria.constructor.name, ": ").concat(veterinaria.getNombre()))) {
+                    //Ejecuta nuevamente el Metodo crearProveedor
+                    this.crearProveedor();
+                }
+            }
+        }
+        else {
+            console.log("No hay Veterinarias Creadas aun, debera crear una para asignarle proovedores");
+            this.esperarEnter();
+            this.crearVeterinaria();
+        }
+    };
     GestorPrograma.prototype.listarProveedores = function () { };
     GestorPrograma.prototype.modificarProveedor = function () { };
     GestorPrograma.prototype.eliminarProveedor = function () { };
@@ -387,7 +400,31 @@ var GestorPrograma = /** @class */ (function () {
     };
     ;
     //CRUD Clientes
-    GestorPrograma.prototype.crearCliente = function () { };
+    GestorPrograma.prototype.crearCliente = function () {
+        this.listarVeterinarias();
+        var id = rls.questionInt("Ingrese el numero de la Veterinaria al que desee asignar cliente: ") - 1;
+        if (id < 0 || id > this.listaVeterinarias.length - 1) {
+            console.log("Numero Invalido");
+            this.esperarEnter();
+        }
+        else {
+            var veterinaria = this.listaVeterinarias[id];
+            console.log("Veterinaria: ".concat(veterinaria.getNombre(), " Direccion: ").concat(veterinaria.getDireccion()));
+            console.clear();
+            var nombre = rls.question("Ingrese el nombre del Cliente: ");
+            var telefono = rls.questionInt("Ingrese el numero telefonico del Cliente: ");
+            var dni = rls.questionInt("Ingrese el dni del Cliente: ");
+            var cliente = new Clientes_1.Cliente(nombre, telefono, dni);
+            veterinaria.setCliente(cliente);
+            console.log("".concat(cliente.constructor.name, ": ").concat(cliente.getNombre(), ", Agregado Exitosamente"));
+            this.esperarEnter();
+            console.clear();
+            if (rls.keyInYNStrict("Desea agregar otro: ".concat(cliente.constructor.name))) {
+                //Ejecuta nuevamente el Metodo crearProveedor
+                this.crearCliente();
+            }
+        }
+    };
     GestorPrograma.prototype.listarClientes = function () { };
     GestorPrograma.prototype.modificarCliente = function () { };
     GestorPrograma.prototype.eliminarCliente = function () { };

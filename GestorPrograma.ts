@@ -197,7 +197,6 @@ export class GestorPrograma{
     //CRUD Veterinarias
     private crearVeterinaria(){
         console.clear();
-        let id:string = "1";
         let nombre:string  = rls.question("Ingrese el nombre de la Veterinaria: ");
         console.log("Ingrese Direccion de la Veterinaria: ");
         let calle: string = rls.question("Calle: ");
@@ -226,21 +225,6 @@ export class GestorPrograma{
         }
         this.esperarEnter();
         console.clear();
-    }
-
-    private listarVeterinarias2() {
-        console.clear();
-        if (this.listaVeterinarias.length === 0) {
-            console.log("No hay veterinarias registradas.");
-        } else {
-            console.log("\n--- Lista de Veterinarias ---");
-            this.listaVeterinarias.forEach((vet, index) => {
-                console.log(`${index + 1}. Veterinaria: ${vet.getNombre()} Direccion - ${vet.getDireccion()}`);
-            });
-        }
-        this.esperarEnter();
-        console.clear();
-        this.modificarVeterinaria();
     }
 
     private modificarVeterinaria(){
@@ -296,15 +280,13 @@ export class GestorPrograma{
         }
 
     }
-    private confirmarEliminacionVeterinaria(){
 
-    }
     private gestorProveedores(){
         console.clear();
         let opcionSeleccionada: number;
         this.mensajeOpciones("Aqui podra Crear o Modificar Proveedores");
         do {
-            opcionSeleccionada = this.menuOpciones(" 1 - Crear nueva Proveedor \n 2 - Ver Lista de Proovedores\n 3 - Modificar Proveedor \n 4 - Eliminar Proveedor\n 5 - Volver", 1, 5);
+            opcionSeleccionada = this.menuOpciones(" 1 - Crear nuevo Proveedor \n 2 - Ver Lista de Proovedores\n 3 - Modificar Proveedor \n 4 - Eliminar Proveedor\n 5 - Volver", 1, 5);
             switch (opcionSeleccionada) {
                 case 1: this.crearProveedor(); break;
                 case 2: this.listarProveedores(); break;
@@ -318,7 +300,35 @@ export class GestorPrograma{
         } while (opcionSeleccionada !==5);
     };
     //CRUD Proveedores
-    private crearProveedor(){}
+    private crearProveedor(){
+        if (this.listaVeterinarias.length!=0){
+            this.listarVeterinarias();
+            let id:number = rls.questionInt("Ingrese el numero de la Veterinaria al que desee asignar proveedor: ")-1;
+            if (id<0 || id > this.listaVeterinarias.length-1){
+                console.log("Numero Invalido")
+                this.esperarEnter();
+            }else{
+                let veterinaria : Veterinaria = this.listaVeterinarias[id];
+                console.log(`Veterinaria: ${veterinaria.getNombre()} Direccion: ${veterinaria.getDireccion()}`)
+                console.clear();
+                let nombre:string  = rls.question("Ingrese el nombre del Proveedor: ");
+                let contacto:string  = rls.question("Ingrese el numero telefonico del Proveedor: ");
+                const proveedor:Proveedor = new Proveedor(nombre, contacto);
+                veterinaria.setProveedor(proveedor);
+                console.log(`${proveedor.constructor.name}: ${proveedor.getNombre()}, Agregado Exitosamente a la ${veterinaria.constructor.name}: ${veterinaria.getNombre()}`);
+                this.esperarEnter();
+                console.clear();
+                if (rls.keyInYNStrict(`Desea agregar otro: ${proveedor.constructor.name} a la ${veterinaria.constructor.name}: ${veterinaria.getNombre()}`)) {
+                    //Ejecuta nuevamente el Metodo crearProveedor
+                    this.crearProveedor();
+                }
+        }
+    }else{
+        console.log("No hay Veterinarias Creadas aun, debera crear una para asignarle proovedores");
+        this.esperarEnter();
+        this.crearVeterinaria();
+    }
+    }
     private listarProveedores(){}
     private modificarProveedor(){}
     private eliminarProveedor(){}
@@ -342,7 +352,30 @@ export class GestorPrograma{
         } while (opcionSeleccionada !==5);
     };
     //CRUD Clientes
-    private crearCliente(){}
+    private crearCliente(){
+        this.listarVeterinarias();
+        let id:number = rls.questionInt("Ingrese el numero de la Veterinaria al que desee asignar cliente: ")-1;
+        if (id<0 || id > this.listaVeterinarias.length-1){
+            console.log("Numero Invalido")
+            this.esperarEnter();
+        }else{
+            let veterinaria : Veterinaria = this.listaVeterinarias[id];
+            console.log(`Veterinaria: ${veterinaria.getNombre()} Direccion: ${veterinaria.getDireccion()}`)
+            console.clear();
+            let nombre:string  = rls.question("Ingrese el nombre del Cliente: ");
+            let telefono:number  = rls.questionInt("Ingrese el numero telefonico del Cliente: ");
+            let dni : number = rls.questionInt("Ingrese el dni del Cliente: ");
+            const cliente:Cliente = new Cliente(nombre, telefono, dni);
+            veterinaria.setCliente(cliente);
+            console.log(`${cliente.constructor.name}: ${cliente.getNombre()}, Agregado Exitosamente`);
+            this.esperarEnter();
+            console.clear();
+            if (rls.keyInYNStrict(`Desea agregar otro: ${cliente.constructor.name}`)) {
+                //Ejecuta nuevamente el Metodo crearProveedor
+                this.crearCliente();
+            }
+        }
+    }
     private listarClientes(){}
     private modificarCliente(){}
     private eliminarCliente(){}
