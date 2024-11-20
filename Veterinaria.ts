@@ -7,7 +7,7 @@ export class Veterinaria {
   private nombre: string;
   private direccion: string;
   private listaClientes: Cliente[] = [];
-  private listaPacientes:Paciente[] = []
+  private listaPacientes:Paciente[] = [];
   private listaProveedores : Proveedor[] = [];
 
   constructor(nombre: string, direccion: string) {

@@ -211,7 +211,6 @@ export class GestorPrograma{
            //Ejecuta nuevamente el Metodo crearVeterinaria 
             this.crearVeterinaria();
         }
-        
     }
     private listarVeterinarias() {
         console.clear();
@@ -527,18 +526,6 @@ export class GestorPrograma{
     private listarPacientes(){}
     private modificarPaciente(){}
     private eliminarPaciente(){}
-    
-    private validarVeterinarias(): Veterinaria | null {
-        if (this.listaVeterinarias.length === 0) {
-            console.log("No hay Veterinarias creadas aún. Por favor, cree una para continuar.");
-            this.esperarEnter();
-            this.crearVeterinaria();
-            return null;
-        }
-        return this.listaVeterinarias[
-            this.menuOpciones("Seleccione una Veterinaria: ", 1, this.listaVeterinarias.length) - 1
-        ];
-    }
 
     //Funcion que Recibe mensaje y Opciones disponibles
     private menuOpciones(mensaje: string, min: number, max: number): number {
