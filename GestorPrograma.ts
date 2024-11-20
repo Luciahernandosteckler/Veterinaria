@@ -43,7 +43,7 @@ export class GestorPrograma{
                 case 2: this.gestorProveedores(); break;
                 case 3: this.gestorClientes(); break;
                 case 4: this.gestorPacientes(); break;
-                case 5: console.log("Volviendo...")
+                case 5: console.log("Volviendo...");
                         console.clear();
                         break;
                 default: console.log("Error de Datos");
@@ -337,14 +337,14 @@ export class GestorPrograma{
         console.clear();
         let opcionSeleccionada: number;
         this.mensajeOpciones("Aqui podra Crear o Modificar Clientes");
-            opcionSeleccionada = this.menuOpciones(" 1 - Crear nueva Cliente \n 2 - Ver Lista de Clientes\n 3 - Modificar Cliente \n 4 - Eliminar Cliente\n 5 - Volver", 1, 5);
             do {
+                opcionSeleccionada = this.menuOpciones(" 1 - Crear nuevo Cliente \n 2 - Ver Lista de Clientes\n 3 - Modificar Cliente \n 4 - Eliminar Cliente\n 5 - Volver", 1, 5);
             switch (opcionSeleccionada) {
                 case 1: this.crearCliente(); break;
                 case 2: this.listarClientes(); break;
                 case 3: this.modificarCliente(); break;
                 case 4: this.eliminarCliente(); break;
-                case 5: console.log("Volviendo...")
+                case 5: console.log("Volviendo...");
                         console.clear(); 
                         break;
                 default: console.log("Error de Datos");
@@ -352,31 +352,113 @@ export class GestorPrograma{
         } while (opcionSeleccionada !==5);
     };
     //CRUD Clientes
-    private crearCliente(){
+    private crearCliente(): void {
+        // Validar si hay veterinarias creadas
+        if (this.listaVeterinarias.length === 0) {
+            console.log("No hay Veterinarias creadas aún. Por favor, cree una para continuar.");
+            this.esperarEnter();
+            this.crearVeterinaria();
+            return; // Salir porque no se puede continuar
+        }
+    
+        // Seleccionar veterinaria
         this.listarVeterinarias();
-        let id:number = rls.questionInt("Ingrese el numero de la Veterinaria al que desee asignar cliente: ")-1;
-        if (id<0 || id > this.listaVeterinarias.length-1){
-            console.log("Numero Invalido")
-            this.esperarEnter();
-        }else{
-            let veterinaria : Veterinaria = this.listaVeterinarias[id];
-            console.log(`Veterinaria: ${veterinaria.getNombre()} Direccion: ${veterinaria.getDireccion()}`)
-            console.clear();
-            let nombre:string  = rls.question("Ingrese el nombre del Cliente: ");
-            let telefono:number  = rls.questionInt("Ingrese el numero telefonico del Cliente: ");
-            let dni : number = rls.questionInt("Ingrese el dni del Cliente: ");
-            const cliente:Cliente = new Cliente(nombre, telefono, dni);
+        const idVeterinaria = this.menuOpciones(
+            "Ingrese el número de la Veterinaria a la que desea asignar un Cliente: ",
+            1,
+            this.listaVeterinarias.length
+        ) - 1; // Ajustar índice a base 0
+        const veterinaria = this.listaVeterinarias[idVeterinaria];
+    
+        console.clear();
+        console.log(`Veterinaria seleccionada: ${veterinaria.getNombre()} (${veterinaria.getDireccion()})`);
+            // Crear cliente
+            const nombre = rls.question("Ingrese el nombre del Cliente: ");
+            const telefono = rls.questionInt("Ingrese el número telefónico del Cliente: ");
+            const dni = rls.questionInt("Ingrese el DNI del Cliente: ");
+            const cliente = new Cliente(nombre, telefono, dni);
+    
+            // Asignar cliente a la veterinaria
             veterinaria.setCliente(cliente);
-            console.log(`${cliente.constructor.name}: ${cliente.getNombre()}, Agregado Exitosamente`);
-            this.esperarEnter();
+            console.log(`Cliente ${cliente.getNombre()} agregado exitosamente a ${veterinaria.getNombre()}.`);
+    
+            // Preguntar si desea agregar otro cliente
+            if (rls.keyInYNStrict(`Desea agregar otro: ${cliente.constructor.name} a la ${veterinaria.constructor.name}: ${veterinaria.getNombre()}`)) {
+                //Ejecuta nuevamente el Metodo crearProveedor
+                this.crearClientePorVeterinaria(veterinaria);
+            }else{
+                return;
+            }
             console.clear();
-            if (rls.keyInYNStrict(`Desea agregar otro: ${cliente.constructor.name}`)) {
+            
+        
+    }
+    private crearClientePorVeterinaria(veterinaria:Veterinaria): void {
+        console.clear();
+        console.log(`Veterinaria seleccionada: ${veterinaria.getNombre()} (${veterinaria.getDireccion()})`);
+            // Crear cliente
+            const nombre = rls.question("Ingrese el nombre del Cliente: ");
+            const telefono = rls.questionInt("Ingrese el número telefónico del Cliente: ");
+            const dni = rls.questionInt("Ingrese el DNI del Cliente: ");
+            const cliente = new Cliente(nombre, telefono, dni);
+    
+            // Asignar cliente a la veterinaria
+            veterinaria.setCliente(cliente);
+            console.log(`Cliente ${cliente.getNombre()} agregado exitosamente a ${veterinaria.getNombre()}.`);
+    
+            // Preguntar si desea agregar otro cliente
+            if (rls.keyInYNStrict(`Desea agregar otro: ${cliente.constructor.name} a la ${veterinaria.constructor.name}: ${veterinaria.getNombre()}`)) {
+                //Ejecuta nuevamente el Metodo crearProveedor
+                this.crearClientePorVeterinaria(veterinaria);
+            }else{
+                this.gestorClientes();
+            }
+            console.clear();
+            
+        
+    }
+
+    private listarClientes(): void {
+        // Validar si hay veterinarias creadas
+        if (this.listaVeterinarias.length === 0) {
+            console.log("No hay Veterinarias creadas aún. Por favor, cree una para continuar.");
+            this.esperarEnter();
+            this.crearVeterinaria();
+            return; // Salir porque no se puede continuar
+        }
+    
+        // Seleccionar veterinaria
+        this.listarVeterinarias();
+        const idVeterinaria = this.menuOpciones(
+            "Ingrese el número de la Veterinaria para ver sus Clientes: ",
+            1,
+            this.listaVeterinarias.length
+        ) - 1; // Ajustar índice a base 0
+        const veterinaria = this.listaVeterinarias[idVeterinaria];
+    
+        // Validar si hay clientes asociados
+        const clientes = veterinaria.getCliente();
+        if (clientes.length === 0) {
+            console.log(`No hay Clientes registrados en la Veterinaria ${veterinaria.getNombre()}.`);
+            if (rls.keyInYNStrict(`Desea crear un nuevo cliente a la ${veterinaria.constructor.name}: ${veterinaria.getNombre()}`)) {
                 //Ejecuta nuevamente el Metodo crearProveedor
                 this.crearCliente();
+            }else{
+                return; // Salir porque no hay nada que listar
             }
         }
+    
+        // Listar clientes
+        console.log(`Clientes registrados en ${veterinaria.getNombre()}:`);
+        clientes.forEach((cliente, index) => {
+            console.log(`${index + 1} - ${cliente.getNombre()} (Tel: ${cliente.getTelefono()}, DNI: ${cliente.getDni()})`);
+        });
+    
+        this.esperarEnter();
+        console.clear();
+        this.gestorClientes();
     }
-    private listarClientes(){}
+
     private modificarCliente(){}
     private eliminarCliente(){}
 
@@ -384,26 +466,80 @@ export class GestorPrograma{
         console.clear();
         let opcionSeleccionada: number;
         this.mensajeOpciones("Aqui podra Crear o Modificar Pacientes");
-            opcionSeleccionada = this.menuOpciones(" 1 - Crear nueva Paciente \n 2 - Ver Lista de Pacientes\n 3 - Modificar Paciente \n 4 - Eliminar Paciente\n 5 - Volver", 1, 5);
             do {
-            switch (opcionSeleccionada) {
-                case 1: this.crearPaciente(); break;
-                case 2: this.listarPacientes(); break;
-                case 3: this.modificarPaciente(); break;
-                case 4: this.eliminarPaciente(); break;
-                case 5: console.log("Volviendo...")
-                        console.clear(); 
-                        break;
-                default: console.log("Error de Datos");
-            }
-        } while (opcionSeleccionada !==5);
+                opcionSeleccionada = this.menuOpciones(" 1 - Crear nuevo Paciente \n 2 - Ver Lista de Pacientes\n 3 - Modificar Paciente \n 4 - Eliminar Paciente\n 5 - Volver", 1, 5);
+                switch (opcionSeleccionada) {
+                    case 1: this.crearPaciente(); break;
+                    case 2: this.listarPacientes(); break;
+                    case 3: this.modificarPaciente(); break;
+                    case 4: this.eliminarPaciente(); break;
+                    case 5: console.log("Volviendo...");
+                            this.ejecutarComoAdministrador;
+                            console.clear(); 
+                            break;
+                    default: console.log("Error de Datos");
+                }
+            } while (opcionSeleccionada !==5);
     };
     //CRUD Pacientes
-    private crearPaciente(){}
+    private crearPaciente(): void {
+    // Validar si existen veterinarias
+    if (this.listaVeterinarias.length === 0) {
+        console.log("No hay Veterinarias creadas aún. Por favor, cree una para continuar.");
+        this.esperarEnter();
+        this.crearVeterinaria();
+        //return; // Salir porque no se puede continuar
+    }
+
+    // Seleccionar veterinaria
+    this.listarVeterinarias();
+    const idVeterinaria = this.menuOpciones(
+        "Ingrese el número de la Veterinaria a la que desea asignar el Paciente: ", 1, (this.listaVeterinarias.length));
+    const veterinaria = this.listaVeterinarias[idVeterinaria-1];
+    // Validar si existen clientes en la veterinaria
+    if (veterinaria.getCliente().length === 0) {
+        console.log("No hay Clientes creados en esta Veterinaria. Cree uno para continuar.");
+        this.esperarEnter();
+        this.crearCliente();
+        //return; // Salir porque no se puede continuar
+    }
+
+    // Seleccionar cliente
+    const clientes = veterinaria.getCliente();
+    this.listarClientes();
+    const idCliente = this.menuOpciones(
+        "Ingrese el número del Cliente al que desea asignar el Paciente: ", 1, clientes.length);
+    const cliente = clientes[idCliente-1];
+
+    // Crear paciente
+    const nombre = rls.question("Ingrese el nombre de la Mascota: ");
+    const tipo = rls.question("Ingrese el tipo de Mascota: ");
+    const mascota = new Paciente(nombre, tipo, cliente.getId());
+    cliente.setMascotas(mascota);
+
+    console.log(
+        `${mascota.constructor.name}: ${mascota.getNombre()} agregado exitosamente al ${cliente.constructor.name}: ${cliente.getNombre()} en la ${veterinaria.constructor.name}: ${veterinaria.getNombre()}.`
+    );
+    this.esperarEnter();
+    console.clear();
+}
+
     private listarPacientes(){}
     private modificarPaciente(){}
     private eliminarPaciente(){}
     
+    private validarVeterinarias(): Veterinaria | null {
+        if (this.listaVeterinarias.length === 0) {
+            console.log("No hay Veterinarias creadas aún. Por favor, cree una para continuar.");
+            this.esperarEnter();
+            this.crearVeterinaria();
+            return null;
+        }
+        return this.listaVeterinarias[
+            this.menuOpciones("Seleccione una Veterinaria: ", 1, this.listaVeterinarias.length) - 1
+        ];
+    }
+
     //Funcion que Recibe mensaje y Opciones disponibles
     private menuOpciones(mensaje: string, min: number, max: number): number {
         let opcionSeleccionada: number;
