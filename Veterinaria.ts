@@ -48,8 +48,31 @@ export class Veterinaria {
     }
   }
 
-  // eliminarPaciente(paciente: Paciente): void{}; //ToDo implementar.
-  // modificarPaciente(paciente: Paciente): void{}; //ToDo implementar
+  // METODOS PACIENTE //
+
+  // Eliminar un paciente
+  eliminarPaciente(id: string): void {
+    // Filtrar los pacientes para excluir el paciente con el ID proporcionado
+    this.pacientes = this.pacientes.filter((pac) => pac.getId() !== id);
+    console.log(`Paciente con ID: ${id} ha sido eliminado.`);
+  }
+
+  // Modificar un paciente
+  modificarPaciente(id: string, pacienteNuevo: Paciente): void {
+    // Buscar el paciente existente usando el ID
+    let paciente = this.pacientes.find((pac) => pac.getId() === id);
+    
+    if (paciente) {
+      // Reemplazar el paciente viejo con el nuevo
+      const index = this.pacientes.indexOf(paciente);
+      if (index !== -1) {
+        this.pacientes[index] = pacienteNuevo;
+        console.log(`Paciente con ID: ${id} ha sido modificado.`);
+      }
+    } else {
+      console.log(`No se encontró el paciente con ID: ${id}.`);
+    }
+  }
 
   //GETTERS Y SETTERS
 
