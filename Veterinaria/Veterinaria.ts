@@ -77,7 +77,7 @@ export class Veterinaria {
 
   //CRUD Clientes
 
-  public crearCliente(veterinaria: Veterinaria): void {
+  public crearCliente(): void {
     console.clear();
         // Crear cliente
         const nombre : string = rls.question("Ingrese el nombre del Cliente: ");
@@ -87,25 +87,25 @@ export class Veterinaria {
 
         // Asignar cliente a la veterinaria
         this.agregarClienteALaLista(cliente);
-        console.log(`Cliente ${cliente.getNombre()} agregado exitosamente a la ${veterinaria.constructor.name}: ${veterinaria.getNombre()}`);
-    
+        console.log(`Cliente ${cliente.getNombre()} agregado exitosamente a la ${this.constructor.name}: ${this.nombre}`);
+        GestorPrograma.esperarEnter();
     console.clear();
 }
 
-public listarClientes(veterinaria: Veterinaria): void {
+public listarClientes(): void {
   // Validar si hay clientes asociados
   if (this.listaClientes.length === 0) {
-      console.log(`No hay clientes registrados en la veterinaria: ${veterinaria.getNombre()}.`);
+      console.log(`No hay clientes registrados en la veterinaria: ${this.nombre}.`);
       if (rls.keyInYNStrict(`¿Desea crear un nuevo cliente?`)) {
           // Ejecuta nuevamente el Metodo crearCliente si se selecciona 'Sí'
-          this.crearCliente(veterinaria);
+          this.crearCliente();
       } else {
           return; // Salir porque no hay nada que listar
       }
   }
 
   // Listar clientes
-  console.log(`Clientes registrados en la veterinaria: ${veterinaria.getNombre()}`);
+  console.log(`Clientes registrados en la veterinaria: ${this.nombre}`);
   this.mostrarListaClientes();
 
   // Esperar la interacción del usuario
@@ -113,10 +113,10 @@ public listarClientes(veterinaria: Veterinaria): void {
   console.clear();
 }
 
-public modificarCliente(veterinaria: Veterinaria): void {
+public modificarCliente(): void {
     let modificarOtro = true;
     while (modificarOtro) {
-        this.listarClientes(veterinaria);
+        this.listarClientes();
         let id: number = rls.questionInt("Ingrese el numero del Cliente que desee modificar: ") - 1;
         if (id < 0 || id >= this.listaClientes.length) {
             console.log("Número inválido");
@@ -147,10 +147,10 @@ public modificarCliente(veterinaria: Veterinaria): void {
     console.clear();
 }
 
-public eliminarCliente(veterinaria: Veterinaria): void {
+public eliminarCliente(): void {
   let eliminarOtro = true;
   while (eliminarOtro) {
-      this.listarClientes(veterinaria);
+      this.listarClientes();
       let id: number = rls.questionInt("Ingrese el numero del Cliente que desee eliminar: ") - 1;
       if (id < 0 || id >= this.listaClientes.length) {
           console.log("Número inválido");
@@ -187,7 +187,7 @@ public eliminarCliente(veterinaria: Veterinaria): void {
   
   //CRUD Proveedores
 
-  public crearProveedor(veterinaria: Veterinaria): void {
+  public crearProveedor(): void {
     console.clear();
     let agregarOtro = true;
     while (agregarOtro) {
@@ -199,7 +199,7 @@ public eliminarCliente(veterinaria: Veterinaria): void {
 
         // Asignar proveedor a la veterinaria
         this.agregarProveedorALaLista(proveedor);
-        console.log(`Proveedor ${proveedor.getNombre()} agregado exitosamente a la ${veterinaria.constructor.name}: ${veterinaria.getNombre()}`);
+        console.log(`Proveedor ${proveedor.getNombre()} agregado exitosamente a la ${this.constructor.name}: ${this.nombre}`);
 
         // Preguntar si desea agregar otro proveedor
         agregarOtro = rls.keyInYNStrict(`Desea agregar otro proveedor?`);
@@ -207,20 +207,20 @@ public eliminarCliente(veterinaria: Veterinaria): void {
     console.clear();
 }
 
-public listarProveedores(veterinaria: Veterinaria): void {
+public listarProveedores(): void {
   // Validar si hay clientes asociados
   if (this.listaProveedores.length === 0) {
-      console.log(`No hay proveedores registrados en la veterinaria: ${veterinaria.getNombre()}.`);
+      console.log(`No hay proveedores registrados en la ${this.constructor.name}: ${this.nombre}.`);
       if (rls.keyInYNStrict(`¿Desea crear un nuevo proveedor?`)) {
           // Ejecuta nuevamente el Metodo crearCliente si se selecciona 'Sí'
-          this.crearProveedor(veterinaria);
+          this.crearProveedor();
       } else {
           return; // Salir porque no hay nada que listar
       }
   }
 
   // Listar proveedores
-  console.log(`Proveedores registrados en la veterinaria: ${veterinaria.getNombre()}`);
+  console.log(`Proveedores registrados en la veterinaria: ${this.nombre}`);
   this.mostrarListaProveedores();
 
   // Esperar la interacción del usuario
@@ -228,10 +228,10 @@ public listarProveedores(veterinaria: Veterinaria): void {
   console.clear();
 }
 
-public modificarProveedor(veterinaria: Veterinaria): void {
+public modificarProveedor(): void {
     let modificarOtro = true;
     while (modificarOtro) {
-        this.listarProveedores(veterinaria);
+        this.listarProveedores();
         let id: number = rls.questionInt("Ingrese el numero del Proveedor que desee modificar: ") - 1;
         if (id < 0 || id >= this.listaProveedores.length) {
             console.log("Número inválido");
@@ -262,10 +262,10 @@ public modificarProveedor(veterinaria: Veterinaria): void {
     console.clear();
 }
 
-public eliminarProveedor(veterinaria: Veterinaria): void {
+public eliminarProveedor(): void {
   let eliminarOtro = true;
   while (eliminarOtro) {
-      this.listarProveedores(veterinaria);
+      this.listarProveedores();
       let id: number = rls.questionInt("Ingrese el numero del Proveedor que desee eliminar: ") - 1;
       if (id < 0 || id >= this.listaProveedores.length) {
           console.log("Número inválido");
