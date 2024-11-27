@@ -192,6 +192,7 @@ export class GestorPrograma {
         if (!veterinaria) return;
 
         const cliente  = this.seleccionarCliente(veterinaria);
+        if (!cliente) return;
 
         let opcionSeleccionada: number;
 
@@ -239,7 +240,7 @@ export class GestorPrograma {
         this.mensajeOpciones("Bienvenido " + cliente.getNombre());
         if (cliente.getMascotas().length <= 0 || cliente.getNumeroVisitas() == 0) {
             do {
-                opcionSeleccionada = this.menuOpciones(" 1 - Datos Personales \n 2 - Mis Mascotas\n 3 - Volver");
+                opcionSeleccionada = this.menuOpciones(" 1 - Datos Personales \n 2 - Mis Mascotas\n 3 - Atender Mascota\n 4- Volver");
                 switch (opcionSeleccionada) {
                     case 1:
                         console.log(` Nombre: ${cliente.getNombre()}\n Dni: ${cliente.getDni()}\n Telefono ${cliente.getTelefono()}`);
@@ -255,6 +256,9 @@ export class GestorPrograma {
                         GestorPrograma.esperarEnter();
                         break;
                     case 3:
+                            cliente.atenderMascota();
+                            break;
+                    case 4:
                         console.log("Volviendo...");
                         GestorPrograma.esperarEnter();
                         break;
@@ -262,9 +266,10 @@ export class GestorPrograma {
                         console.log("Error de Datos");
                         GestorPrograma.esperarEnter();
                 }
-            } while (opcionSeleccionada !== 3);
+            } while (opcionSeleccionada !== 4);
         } else {
-            opcionSeleccionada = this.menuOpciones(" 1 - Datos Personales \n 2 - Mis Mascotas\n 3- Salir");
+            console.clear();
+            opcionSeleccionada = this.menuOpciones(" 1 - Datos Personales \n 2 - Mis Mascotas\n 3 - Atender Mascota\n 4- Volver");
             do {
                 switch (opcionSeleccionada) {
                     case 1:
@@ -276,6 +281,8 @@ export class GestorPrograma {
                         GestorPrograma.esperarEnter();
                         break;
                     case 3:
+                        cliente.atenderMascota();
+                    case 4:
                         console.log("Saliendo...");
                         GestorPrograma.esperarEnter();
                         break;
@@ -283,7 +290,7 @@ export class GestorPrograma {
                         console.log("Error de Datos");
                         GestorPrograma.esperarEnter();
                 }
-            } while (opcionSeleccionada !== 3);
+            } while (opcionSeleccionada !== 4);
         }
     }
 

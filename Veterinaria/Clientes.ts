@@ -1,5 +1,6 @@
 import * as rls from 'readline-sync';
 import {Paciente} from "./Paciente";
+import {Consulta} from "./Consulta";
 import {GestorPrograma} from "./GestorPrograma";
 
 export class Cliente {
@@ -115,10 +116,10 @@ export class Cliente {
         this.agregarMascotaALaLista(mascota);
         console.log(`Mascota ${mascota.getNombre()} agregado exitosamente al ${this.constructor.name}: ${this.nombre}`);
         GestorPrograma.esperarEnter();
-    console.clear();
 }
 
 public listarMascotas(): void {
+  console.clear();
   // Validar si tiene  mascotas
   if (this.listaMascotas.length === 0) {
       console.log(`No hay Mascotas registradas al cliente: ${this.nombre}.`);
@@ -136,10 +137,10 @@ public listarMascotas(): void {
 
   // Esperar la interacción del usuario
   GestorPrograma.esperarEnter();
-  console.clear();
 }
 
 public modificarMascota(): void {
+    console.clear();
     let modificarOtro = true;
     while (modificarOtro) {
         this.listarMascotas();
@@ -168,6 +169,7 @@ public modificarMascota(): void {
 }
 
 public eliminarMascota(): void {
+  console.clear();
   let eliminarOtro = true;
   while (eliminarOtro) {
       this.listarMascotas();
@@ -190,7 +192,44 @@ public eliminarMascota(): void {
 
       eliminarOtro = rls.keyInYNStrict(`¿Desea eliminar otra mascota?`);
   }
-  console.clear();
 }
 
+public atenderMascota():void{
+  console.clear();
+  const mascota : Paciente = this.seleccionarMascota();
+  if (mascota!=null){
+    const consulta : Consulta = new Consulta(this,mascota);
+    const motivo : string = consulta.agregarMotivo();
+    const precio : number = consulta.calcularPrecio();
+    console.log(`Se registro la Consulta de su Mascota: ${mascota.getNombre()}\nMotivo: ${motivo}\nPrecio: ${precio}`);
+    this.incrementarVisitas();
+    GestorPrograma.esperarEnter();
+    console.clear();
+  }
+}
+
+    // Comprueba si el cliente tiene Mascotas
+    private seleccionarMascota(): Paciente {
+      console.clear();
+      const mascotas: Paciente[] = this.getMascotas();
+      if (mascotas.length === 0) {
+          console.log("No hay Mascotas creadas aún. Por favor, cree una para continuar.");
+          GestorPrograma.esperarEnter();
+          this.crearMascota();
+      }
+      this.listarMascotas();
+      console.clear();
+      const id = rls.questionInt("Ingrese el número de la Mascota que desea atender: ") - 1;
+
+      if (id < 0 || id >= mascotas.length) {
+          console.log("Número inválido. Regresando al menú principal.");
+          GestorPrograma.esperarEnter();
+      }
+
+      const mascota : Paciente = mascotas[id];
+      console.log(`Mascota seleccionada: ${mascota.getNombre()} (${mascota.getEspecie()})`);
+      GestorPrograma.esperarEnter();
+      console.clear();
+      return mascota;
+  }
 }

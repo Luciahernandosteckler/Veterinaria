@@ -44,6 +44,7 @@ export class Paciente {
   }
 
   public setEspecie(especie: string): void {
+    especie = especie.toLowerCase();
     if(especie != "perro" && especie != "gato"){
       this.especie = "exotica";
     }else{

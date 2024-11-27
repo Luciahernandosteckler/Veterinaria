@@ -67,6 +67,7 @@ export class RedVeterinarias {
     GestorPrograma.esperarEnter();
     console.clear();
   }
+  
   //MODIFICAR VETERINARIAS
   public modificarVeterinaria() {
     this.listarVeterinarias();
@@ -97,6 +98,7 @@ export class RedVeterinarias {
       }
     }
   }
+
   //ELIMINAR VETERINARIAS
   public eliminarVeterinaria() {
     this.listarVeterinarias();
