@@ -2,11 +2,13 @@ export class Proveedor {
   private id: string;
   private nombre: string;
   private contacto: string;
+  private tipo : string;
 
-  constructor(nombre: string, contacto: string) {
+  constructor(nombre: string, contacto: string, tipo:string) {
     this.id = Proveedor.incrementarId();
     this.nombre = nombre;
     this.contacto = contacto;
+    this.tipo = tipo;
   }
 
   static idActual = 0;
@@ -39,5 +41,13 @@ export class Proveedor {
 
   public setContacto(contacto: string): void {
     this.contacto = contacto;
+  }
+
+  public getTipo(): string {
+    return this.tipo;
+  }
+
+  public setTipo(tipo: string): void {
+    this.tipo = tipo;
   }
 }
