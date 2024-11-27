@@ -59,7 +59,7 @@ export class RedVeterinarias {
     if (this.listaVeterinarias.length === 0) {
       console.log("No hay veterinarias registradas.");
     } else {
-      console.log("\n--- Lista de Veterinarias ---");
+      console.log("Lista de Veterinarias");
       this.listaVeterinarias.forEach((vet, index) => {
         console.log(`${index + 1}. Veterinaria: ${vet.getNombre()} Direccion - ${vet.getDireccion()}`);
       });

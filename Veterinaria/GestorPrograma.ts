@@ -24,15 +24,24 @@ export class GestorPrograma {
 
     //Menu principal identificacion (Administrador o Cliente).
     public opcionesGestorVeterinarias(): void {
+        console.clear();
         let opcionSeleccionada: number;
         do {
             this.mensajeOpciones("Bienvenido al Gestor de Veterinarias");
             opcionSeleccionada = this.menuOpciones(" 1 - Soy Administrador \n 2 - Soy Cliente\n 3 - Salir");
             switch (opcionSeleccionada) {
-                case 1: this.ejecutarComoAdministrador(); break;
-                case 2: this.menuCliente(); break;
-                case 3: console.log("Saliendo..."); break;
-                default: console.log("Opción no válida. Por favor, intente nuevamente.");
+                case 1:
+                    this.ejecutarComoAdministrador();
+                    break;
+                case 2:
+                    this.menuCliente();
+                    break;
+                case 3: 
+                    console.log("Saliendo...");
+                    GestorPrograma.esperarEnter();
+                    break;
+                default: 
+                    console.log("Opción no válida. Por favor, intente nuevamente.");
                     GestorPrograma.esperarEnter();
                     console.clear();
             }
@@ -47,22 +56,30 @@ export class GestorPrograma {
             this.mensajeOpciones("Bienvenido administrador");
             opcionSeleccionada = this.menuOpciones(" 1 - Gestor de Veterinarias \n 2 - Gestor de Proveedores\n 3 - Gestor de Clientes\n 4 - Gestor de Pacientes \n 5 - Volver ");
             switch (opcionSeleccionada) {
-                case 1: this.gestorVeterinarias(); break;
-                case 2: this.gestorProveedores(); break;
-                case 3: this.gestorClientes(); break;
-                case 4: this.gestorPacientes(); break;
-                case 5: console.log("Volviendo...");
-                    GestorPrograma.esperarEnter();
-                    console.clear();
+                case 1:
+                    this.gestorVeterinarias();
                     break;
-                default: console.log("Opción no válida. Por favor, intente nuevamente.");
+                case 2:
+                    this.gestorProveedores();
+                    break;
+                case 3:
+                    this.gestorClientes();
+                    break;
+                case 4:
+                    this.gestorPacientes();
+                    break;
+                case 5:
+                    console.log("Volviendo...");
                     GestorPrograma.esperarEnter();
-                    console.clear();
+                    break;
+                default: 
+                    console.log("Opción no válida. Por favor, intente nuevamente.");
+                    GestorPrograma.esperarEnter();
             }
         } while (opcionSeleccionada !== 5);
     };
 
-    //Gestiona CRUD DE VETERINARIAS.
+    //Menu para Gestionar CRUD DE VETERINARIAS.
     private gestorVeterinarias() {
         console.clear()
         let opcionSeleccionada: number;
@@ -70,22 +87,30 @@ export class GestorPrograma {
             this.mensajeOpciones("Aqui podra Crear o Modificar Veterinarias");
             opcionSeleccionada = this.menuOpciones(" 1 - Crear nueva Veterinaria \n 2 - Ver Lista de Veterinarias\n 3 - Modificar Veterinaria \n 4 - Eliminar Veterinaria\n 5 - Volver");
             switch (opcionSeleccionada) {
-                case 1: this.redVeterinarias.crearVeterinaria(); opcionSeleccionada = 5; break;
-                case 2: this.redVeterinarias.listarVeterinarias(); opcionSeleccionada = 5; break;
-                case 3: this.redVeterinarias.modificarVeterinaria(); opcionSeleccionada = 5; break;
-                case 4: this.redVeterinarias.eliminarVeterinaria(); opcionSeleccionada = 5; break;
-                case 5: console.log("Volviendo...")
-                    opcionSeleccionada = 5;
-                    console.clear();
+                case 1: 
+                    this.redVeterinarias.crearVeterinaria();
                     break;
-                default: console.log("Opción no válida. Por favor, intente nuevamente.");
+                case 2: 
+                    this.redVeterinarias.listarVeterinarias();
+                    break;
+                case 3: 
+                    this.redVeterinarias.modificarVeterinaria();
+                    break;
+                case 4: 
+                    this.redVeterinarias.eliminarVeterinaria();
+                    break;
+                case 5: 
+                    console.log("Volviendo...");
                     GestorPrograma.esperarEnter();
-                    console.clear();
+                    break;
+                default: 
+                    console.log("Opción no válida. Por favor, intente nuevamente.");
+                    GestorPrograma.esperarEnter();
             }
         } while (opcionSeleccionada !== 5);
     };
 
-    //Gestiona CRUD DE PROVEEDORES
+    //Menu para Gestionar CRUD DE PROVEEDORES
     private gestorProveedores(): void {
         console.clear();
         const veterinaria = this.seleccionarVeterinaria();
@@ -113,16 +138,15 @@ export class GestorPrograma {
                     break;
                 case 5:
                     console.log("Volviendo...");
-                    console.clear();
+                    GestorPrograma.esperarEnter();
                     break;
                 default: console.log("Opción no válida. Por favor, intente nuevamente.");
                     GestorPrograma.esperarEnter();
-                    console.clear();
             }
         } while (opcionSeleccionada !== 5);
     }
 
-    //Gestiona CRUD DE CLIENTES
+    //Comprueba si hay veterinarias Creadas y Si existen aparece el Menu para Gestionar Crud Clientes
     private gestorClientes(): void {
         console.clear();
         const veterinaria = this.seleccionarVeterinaria();
@@ -149,11 +173,10 @@ export class GestorPrograma {
                         break;
                     case 5:
                         console.log("Volviendo...");
-                        console.clear();
+                        GestorPrograma.esperarEnter();
                         break;
                     default: console.log("Opción no válida. Por favor, intente nuevamente.");
                         GestorPrograma.esperarEnter();
-                        console.clear();
                 }
             } while (opcionSeleccionada !== 5);
         }
@@ -176,16 +199,25 @@ export class GestorPrograma {
             this.mensajeOpciones("Aqui podra Crear o Modificar Pacientes");
             opcionSeleccionada = this.menuOpciones(" 1 - Crear nuevo Paciente \n 2 - Ver Lista de Pacientes\n 3 - Modificar Paciente \n 4 - Eliminar Paciente\n 5 - Volver");
             switch (opcionSeleccionada) {
-                case 1: cliente.crearMascota(); break;
-                case 2: cliente.listarMascotas(); break;
-                case 3: cliente.modificarMascota(); break;
-                case 4: cliente.eliminarMascota(); break;
-                case 5: console.log("Volviendo...");
-                    console.clear();
+                case 1:
+                    cliente.crearMascota();
                     break;
-                default: console.log("Opción no válida. Por favor, intente nuevamente.");
+                case 2:
+                    cliente.listarMascotas();
+                    break;
+                case 3:
+                    cliente.modificarMascota();
+                    break;
+                case 4:
+                    cliente.eliminarMascota();
+                    break;
+                case 5:
+                    console.log("Volviendo...");
                     GestorPrograma.esperarEnter();
-                    console.clear();
+                    break;
+                default:
+                    console.log("Opción no válida. Por favor, intente nuevamente.");
+                    GestorPrograma.esperarEnter();
             }
         } while (opcionSeleccionada !== 5);
     };
@@ -209,33 +241,47 @@ export class GestorPrograma {
             do {
                 opcionSeleccionada = this.menuOpciones(" 1 - Datos Personales \n 2 - Mis Mascotas\n 3 - Volver");
                 switch (opcionSeleccionada) {
-                    case 1: console.log(` Nombre: ${cliente.getNombre()}\n Dni: ${cliente.getDni()}\n Telefono ${cliente.getTelefono()}`);
+                    case 1:
+                        console.log(` Nombre: ${cliente.getNombre()}\n Dni: ${cliente.getDni()}\n Telefono ${cliente.getTelefono()}`);
                         GestorPrograma.esperarEnter();
                         break;
-                    case 2: if (cliente.getMascotas().length == 0) {
+                    case 2:
+                        if (cliente.getMascotas().length == 0) {
                             console.log("Aun no a Cargado ninguna mascota")
                             GestorPrograma.esperarEnter();
                             cliente.crearMascota();
                         }else{
                             this.gestorMascotas(cliente) };
-                            GestorPrograma.esperarEnter();
+                        GestorPrograma.esperarEnter();
                         break;
-                    case 3: console.log("Volviendo..."); break;
-                    default: console.log("Error de Datos");
+                    case 3:
+                        console.log("Volviendo...");
+                        GestorPrograma.esperarEnter();
+                        break;
+                    default:
+                        console.log("Error de Datos");
+                        GestorPrograma.esperarEnter();
                 }
             } while (opcionSeleccionada !== 3);
         } else {
             opcionSeleccionada = this.menuOpciones(" 1 - Datos Personales \n 2 - Mis Mascotas\n 3- Salir");
             do {
                 switch (opcionSeleccionada) {
-                    case 1: console.log(` Nombre: ${cliente.getNombre()}\n Dni: ${cliente.getDni()}\n Telefono ${cliente.getTelefono()}`);
+                    case 1:
+                        console.log(` Nombre: ${cliente.getNombre()}\n Dni: ${cliente.getDni()}\n Telefono ${cliente.getTelefono()}`);
                         GestorPrograma.esperarEnter();
                         break;
-                        case 2: this.gestorMascotas(cliente);
+                    case 2:
+                        this.gestorMascotas(cliente);
                         GestorPrograma.esperarEnter();
                         break;
-                    case 3: console.log("Saliendo..."); break;
-                    default: console.log("Error de Datos");
+                    case 3:
+                        console.log("Saliendo...");
+                        GestorPrograma.esperarEnter();
+                        break;
+                    default:
+                        console.log("Error de Datos");
+                        GestorPrograma.esperarEnter();
                 }
             } while (opcionSeleccionada !== 3);
         }
@@ -254,18 +300,23 @@ export class GestorPrograma {
                 do {
                     opcionSeleccionada = this.menuOpciones(" 1 - Crear nuevo Cliente \n 2 - Ingresar Dni nuevamente\n 3 - Volver");
                     switch (opcionSeleccionada) {
-                        case 1: veterinaria.crearCliente();
-                                cliente = this.buscarClientePorDni(veterinaria, dniCliente);
-                                if (cliente !== null) {
-                                this.ejecutarComoCliente(cliente);
-                                };
-                                break;
-                        case 2: this.menuCliente(); break;
-                        case 3: console.log("Volviendo...")
-                                GestorPrograma.esperarEnter();
-                                console.clear();
-                                break;
-                        default: console.log("Opción no válida. Por favor, intente nuevamente.");
+                        case 1: 
+                            veterinaria.crearCliente();
+                            cliente = this.buscarClientePorDni(veterinaria, dniCliente);
+                            if (cliente !== null) {
+                            this.ejecutarComoCliente(cliente);
+                            };
+                            break;
+                        case 2:
+                            this.menuCliente();
+                            break;
+                        case 3:
+                            console.log("Volviendo...");
+                            GestorPrograma.esperarEnter();
+                            console.clear();
+                           break;
+                        default: 
+                            console.log("Opción no válida. Por favor, intente nuevamente.");
                             GestorPrograma.esperarEnter();
                             console.clear();
                     }
@@ -294,16 +345,25 @@ export class GestorPrograma {
             this.mensajeOpciones("Aqui podra Crear o Modificar Mascotas");
             opcionSeleccionada = this.menuOpciones(" 1 - Crear nueva Mascota \n 2 - Ver Lista de Mascotas\n 3 - Modificar Mascota \n 4 - Eliminar Mascota\n 5 - Volver");
             switch (opcionSeleccionada) {
-                case 1: cliente.crearMascota(); break;
-                case 2: cliente.listarMascotas(); break;
-                case 3: cliente.modificarMascota(); break;
-                case 4: cliente.eliminarMascota(); break;
-                case 5: console.log("Volviendo...");
-                    console.clear();
+                case 1:
+                    cliente.crearMascota();
                     break;
-                default: console.log("Opción no válida. Por favor, intente nuevamente.");
+                case 2:
+                    cliente.listarMascotas();
+                    break;
+                case 3:
+                    cliente.modificarMascota();
+                    break;
+                case 4:
+                    cliente.eliminarMascota();
+                    break;
+                case 5:
+                    console.log("Volviendo...");
                     GestorPrograma.esperarEnter();
-                    console.clear();
+                    break;
+                default:
+                    console.log("Opción no válida. Por favor, intente nuevamente.");
+                    GestorPrograma.esperarEnter();
             }
         } while (opcionSeleccionada !== 5);
     };
@@ -383,7 +443,7 @@ export class GestorPrograma {
         console.clear();
         return opcionSeleccionada;
     }
-    
+
     //Metodo para personalizar el mensaje de Opciones
     private mensajeOpciones(mensaje: string): void {
         console.clear();
