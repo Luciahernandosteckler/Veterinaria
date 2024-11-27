@@ -1,7 +1,5 @@
 import * as rls from 'readline-sync';
 import { Cliente } from "./Clientes";
-import { Paciente } from "./Paciente";
-import { Proveedor } from "./Proveedor";
 import { RedVeterinarias } from "./RedVeterinarias";
 import { Veterinaria } from "./Veterinaria";
 
@@ -9,8 +7,6 @@ import { Veterinaria } from "./Veterinaria";
 export class GestorPrograma {
     private nombre: string;
     private redVeterinarias: RedVeterinarias;
-    private listaClientes: Cliente[] = [];
-    private listaVeterinarias: Veterinaria[] = [];
 
     constructor(nombre: string) {
         this.nombre = nombre;
@@ -49,11 +45,11 @@ export class GestorPrograma {
         let opcionSeleccionada: number;
         do {
             this.mensajeOpciones("Bienvenido administrador");
-            opcionSeleccionada = this.menuOpciones(" 1 - Gestor de Veterinarias \n 2 - Gestor de Clientes\n 3 - Gestor de Proovedores\n 4 - Gestor de Pacientes \n 5 - Volver ");
+            opcionSeleccionada = this.menuOpciones(" 1 - Gestor de Veterinarias \n 2 - Gestor de Proveedores\n 3 - Gestor de Clientes\n 4 - Gestor de Pacientes \n 5 - Volver ");
             switch (opcionSeleccionada) {
                 case 1: this.gestorVeterinarias(); break;
-                case 2: this.gestorClientes(); break;
-                case 3: this.gestorProveedores(); break;
+                case 2: this.gestorProveedores(); break;
+                case 3: this.gestorClientes(); break;
                 case 4: this.gestorPacientes(); break;
                 case 5: console.log("Volviendo...");
                     GestorPrograma.esperarEnter();
@@ -66,7 +62,7 @@ export class GestorPrograma {
         } while (opcionSeleccionada !== 5);
     };
 
-    //Gestiona los CRUD DE VETERINARIAS.
+    //Gestiona CRUD DE VETERINARIAS.
     private gestorVeterinarias() {
         console.clear()
         let opcionSeleccionada: number;
@@ -89,51 +85,44 @@ export class GestorPrograma {
         } while (opcionSeleccionada !== 5);
     };
 
-    // Comprueba si hay veterinarias en la Red y permite seleccionar una
-    private seleccionarVeterinaria(): Veterinaria {
-        const veterinarias = this.redVeterinarias.getVeterinarias();
-        if (veterinarias.length === 0) {
-            console.log("No hay Veterinarias creadas aún. Por favor, cree una para continuar.");
-            this.redVeterinarias.crearVeterinaria();
-        }
-        this.redVeterinarias.listarVeterinarias();
-        const id = rls.questionInt("Ingrese el número de la Veterinaria que desea seleccionar: ") - 1;
+    //Gestiona CRUD DE PROVEEDORES
+    private gestorProveedores(): void {
+        console.clear();
+        const veterinaria = this.seleccionarVeterinaria();
 
-        if (id < 0 || id >= veterinarias.length) {
-            console.log("Número inválido. Regresando al menú principal.");
-            GestorPrograma.esperarEnter();
-        }
+        // Salir si no se seleccionó ninguna veterinaria
+        if (!veterinaria) return;
 
-        const veterinaria = veterinarias[id];
-        console.log(`Veterinaria seleccionada: ${veterinaria.getNombre()} (${veterinaria.getDireccion()})`);
-        GestorPrograma.esperarEnter();
-        return veterinaria;
-    }
+        let opcionSeleccionada: number;
+        do {
+            this.mensajeOpciones("Aquí podrá Crear o Modificar Proveedores");
+            opcionSeleccionada = this.menuOpciones(" 1 - Crear nuevo Proveedor \n 2 - Ver Lista de Proveedores \n 3 - Modificar Proveedor \n 4 - Eliminar Proveedor \n 5 - Volver");
 
-    private seleccionarVeterinariaCliente(): Veterinaria | null {
-        const veterinarias : Veterinaria[] = this.redVeterinarias.getVeterinarias();
-        let veterinaria : Veterinaria | null = null;
-        if (veterinarias.length === 0) {
-            console.log("No hay Veterinarias creadas aún. Por favor, comuniquese con un administrador.");
-            GestorPrograma.esperarEnter();
-        }else{
-            this.redVeterinarias.listarVeterinarias();
-            const id = rls.questionInt("Ingrese el número de la Veterinaria que desea seleccionar: ") - 1;
-
-            if (id < 0 || id >= veterinarias.length) {
-                console.log("Número inválido. Regresando al menú principal.");
-                GestorPrograma.esperarEnter();
-            }else{
-                veterinaria = veterinarias[id];
-                console.log(`Veterinaria seleccionada: ${veterinaria.getNombre()} (${veterinaria.getDireccion()})`);
-                GestorPrograma.esperarEnter();
+            switch (opcionSeleccionada) {
+                case 1:
+                    veterinaria.crearProveedor();
+                    break;
+                case 2:
+                    veterinaria.listarProveedores();
+                    break;
+                case 3:
+                    veterinaria.modificarProveedor();
+                    break;
+                case 4:
+                    veterinaria.eliminarProveedor();
+                    break;
+                case 5:
+                    console.log("Volviendo...");
+                    console.clear();
+                    break;
+                default: console.log("Opción no válida. Por favor, intente nuevamente.");
+                    GestorPrograma.esperarEnter();
+                    console.clear();
             }
-        }
-        
-        return veterinaria;
+        } while (opcionSeleccionada !== 5);
     }
 
-    // Método para gestionar clientes
+    //Gestiona CRUD DE CLIENTES
     private gestorClientes(): void {
         console.clear();
         const veterinaria = this.seleccionarVeterinaria();
@@ -172,43 +161,7 @@ export class GestorPrograma {
 
     }
 
-    // Método para gestionar proveedores
-    private gestorProveedores(): void {
-        console.clear();
-        const veterinaria = this.seleccionarVeterinaria();
-
-        // Salir si no se seleccionó ninguna veterinaria
-        if (!veterinaria) return;
-
-        let opcionSeleccionada: number;
-        do {
-            this.mensajeOpciones("Aquí podrá Crear o Modificar Proveedores");
-            opcionSeleccionada = this.menuOpciones(" 1 - Crear nuevo Proveedor \n 2 - Ver Lista de Proveedores \n 3 - Modificar Proveedor \n 4 - Eliminar Proveedor \n 5 - Volver");
-
-            switch (opcionSeleccionada) {
-                case 1:
-                    veterinaria.crearProveedor();
-                    break;
-                case 2:
-                    veterinaria.listarProveedores();
-                    break;
-                case 3:
-                    veterinaria.modificarProveedor();
-                    break;
-                case 4:
-                    veterinaria.eliminarProveedor();
-                    break;
-                case 5:
-                    console.log("Volviendo...");
-                    console.clear();
-                    break;
-                default: console.log("Opción no válida. Por favor, intente nuevamente.");
-                    GestorPrograma.esperarEnter();
-                    console.clear();
-            }
-        } while (opcionSeleccionada !== 5);
-    }
-
+    //Gestiona CRUD DE PACIENTES
     private gestorPacientes() {
         console.clear();
         const veterinaria = this.seleccionarVeterinaria();
@@ -236,9 +189,19 @@ export class GestorPrograma {
             }
         } while (opcionSeleccionada !== 5);
     };
-    
-    private ejecutarComoCliente(cliente: Cliente) {
 
+    //Comprueba si existen Veterinarias antes de Comprobar el Cliente
+    private menuCliente() {
+        console.clear();
+        let veterinaria : Veterinaria | null = this.seleccionarVeterinariaCliente();
+        // Salir si no se seleccionó ninguna veterinaria
+        if (veterinaria != null) {
+            this.comprobarCliente(veterinaria);
+        }
+    }
+
+    //Menu para Clientes.
+    private ejecutarComoCliente(cliente: Cliente) {
         console.clear();
         let opcionSeleccionada: number;
         this.mensajeOpciones("Bienvenido " + cliente.getNombre());
@@ -275,15 +238,6 @@ export class GestorPrograma {
                     default: console.log("Error de Datos");
                 }
             } while (opcionSeleccionada !== 3);
-        }
-    }
-
-    private menuCliente() {
-        console.clear();
-        let veterinaria : Veterinaria | null = this.seleccionarVeterinariaCliente();
-        // Salir si no se seleccionó ninguna veterinaria
-        if (veterinaria != null) {
-            this.comprobarCliente(veterinaria);
         }
     }
 
@@ -331,28 +285,7 @@ export class GestorPrograma {
         return clienteEncontrado;
     }
 
-    // crearNuevaMascota(cliente: Cliente) {
-    //     console.clear();
-    //     let nombre: string = rls.question("Ingrese Nombre de su Mascota: ");
-    //     let especie = rls.question("Ingrese Especie de su Mascota: ");
-    //     let idPropietario = cliente.getId();
-
-    //     const mascota: Paciente = new Paciente(nombre, especie, idPropietario);
-    //     cliente.agregarMascotaALaLista(mascota);
-    //     console.log("Mascota Agregada Exitosamente")
-    //     GestorPrograma.esperarEnter();
-    // }
-
-    // listarMascotas(cliente: Cliente): Paciente[] | undefined {
-    //     console.clear();
-    //     let mascotas: Paciente[] | undefined = cliente.getMascotas();
-    //     if (mascotas.length === 0) {
-    //         console.log("No hay mascotas para mostrar")
-    //     } else {
-    //         return mascotas;
-    //     }
-    // }
-
+    //Menu para Acceder al CRUD de Mascotas
     private gestorMascotas(cliente:Cliente):void {
         console.clear();
         let opcionSeleccionada: number;
@@ -374,6 +307,27 @@ export class GestorPrograma {
             }
         } while (opcionSeleccionada !== 5);
     };
+
+    // Comprueba si hay veterinarias en la Red y permite seleccionar una, Permite crear en caso de no encontrar
+    private seleccionarVeterinaria(): Veterinaria {
+        const veterinarias = this.redVeterinarias.getVeterinarias();
+        if (veterinarias.length === 0) {
+            console.log("No hay Veterinarias creadas aún. Por favor, cree una para continuar.");
+            this.redVeterinarias.crearVeterinaria();
+        }
+        this.redVeterinarias.listarVeterinarias();
+        const id = rls.questionInt("Ingrese el número de la Veterinaria que desea seleccionar: ") - 1;
+
+        if (id < 0 || id >= veterinarias.length) {
+            console.log("Número inválido. Regresando al menú principal.");
+            GestorPrograma.esperarEnter();
+        }
+
+        const veterinaria = veterinarias[id];
+        console.log(`Veterinaria seleccionada: ${veterinaria.getNombre()} (${veterinaria.getDireccion()})`);
+        GestorPrograma.esperarEnter();
+        return veterinaria;
+    }
 
     // Comprueba si hay clientes en la Red y permite seleccionar uno
     private seleccionarCliente( veterinaria : Veterinaria):Cliente{
@@ -397,9 +351,31 @@ export class GestorPrograma {
         return cliente;
     }
 
+    // Comprueba si hay veterinarias en la Red y permite seleccionar una, no permite Crear
+    private seleccionarVeterinariaCliente(): Veterinaria | null {
+        const veterinarias : Veterinaria[] = this.redVeterinarias.getVeterinarias();
+        let veterinaria : Veterinaria | null = null;
+        if (veterinarias.length === 0) {
+            console.log("No hay Veterinarias creadas aún. Por favor, comuniquese con un administrador.");
+            GestorPrograma.esperarEnter();
+        }else{
+            this.redVeterinarias.listarVeterinarias();
+            const id = rls.questionInt("Ingrese el número de la Veterinaria que desea seleccionar: ") - 1;
 
-
-    //Funcion que Recibe mensaje y Opciones disponibles
+            if (id < 0 || id >= veterinarias.length) {
+                console.log("Número inválido. Regresando al menú principal.");
+                GestorPrograma.esperarEnter();
+            }else{
+                veterinaria = veterinarias[id];
+                console.log(`Veterinaria seleccionada: ${veterinaria.getNombre()} (${veterinaria.getDireccion()})`);
+                GestorPrograma.esperarEnter();
+            }
+        }
+        
+        return veterinaria;
+    }
+    
+    //Metodo que Recibe mensaje y Opciones disponibles
     private menuOpciones(mensaje: string): number {
         let opcionSeleccionada: number;
         console.log(mensaje);
@@ -407,7 +383,8 @@ export class GestorPrograma {
         console.clear();
         return opcionSeleccionada;
     }
-    //Funcion para personalizar el mensaje de Opciones
+    
+    //Metodo para personalizar el mensaje de Opciones
     private mensajeOpciones(mensaje: string): void {
         console.clear();
         console.log(mensaje);
@@ -415,7 +392,7 @@ export class GestorPrograma {
         console.log("Ingrese La Opcion Que Desee");
     }
 
-    //Funcion para pedirle una entrada de Enter al usuario antes de seguir
+    //Metodo Estatico para pedirle una entrada de Enter al usuario antes de seguir.
     public static esperarEnter(): void {
         rls.question("Presione Enter para continuar...");
     }
