@@ -237,10 +237,10 @@ export class GestorPrograma {
     private ejecutarComoCliente(cliente: Cliente) {
         console.clear();
         let opcionSeleccionada: number;
-        this.mensajeOpciones("Bienvenido " + cliente.getNombre());
         if (cliente.getMascotas().length <= 0 || cliente.getNumeroVisitas() == 0) {
             do {
-                opcionSeleccionada = this.menuOpciones(" 1 - Datos Personales \n 2 - Mis Mascotas\n 3 - Atender Mascota\n 4- Volver");
+                this.mensajeOpciones("Bienvenido " + cliente.getNombre());
+                opcionSeleccionada = this.menuOpciones(" 1 - Datos Personales \n 2 - Mis Mascotas\n 3 - Atender Mascota\n 4 - Volver");
                 switch (opcionSeleccionada) {
                     case 1:
                         console.log(` Nombre: ${cliente.getNombre()}\n Dni: ${cliente.getDni()}\n Telefono ${cliente.getTelefono()}`);
@@ -268,9 +268,9 @@ export class GestorPrograma {
                 }
             } while (opcionSeleccionada !== 4);
         } else {
-            console.clear();
-            opcionSeleccionada = this.menuOpciones(" 1 - Datos Personales \n 2 - Mis Mascotas\n 3 - Atender Mascota\n 4- Volver");
             do {
+                this.mensajeOpciones("Bienvenido " + cliente.getNombre());
+                opcionSeleccionada = this.menuOpciones(" 1 - Datos Personales \n 2 - Mis Mascotas\n 3 - Atender Mascota\n 4 - Volver");
                 switch (opcionSeleccionada) {
                     case 1:
                         console.log(` Nombre: ${cliente.getNombre()}\n Dni: ${cliente.getDni()}\n Telefono ${cliente.getTelefono()}`);
