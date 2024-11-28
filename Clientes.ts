@@ -201,7 +201,7 @@ public atenderMascota():void{
     const consulta : Consulta = new Consulta(this,mascota);
     const motivo : string = consulta.agregarMotivo();
     const precio : number = consulta.calcularPrecio();
-    console.log(`Se registro la Consulta de su Mascota: ${mascota.getNombre()}\nMotivo: ${motivo}\nPrecio: ${precio}`);
+    console.log(`Se registro la Consulta de su Mascota: ${mascota.getNombre()}\nMotivo: ${motivo}\nPrecio: $${precio}`);
     this.incrementarVisitas();
     GestorPrograma.esperarEnter();
     console.clear();
