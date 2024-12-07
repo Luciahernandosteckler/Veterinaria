@@ -71,7 +71,7 @@ export class Veterinaria {
   public mostrarListaClientes(){
     console.log("Lista de clientes:");
       this.listaClientes.forEach((cliente, index) => {
-        console.log(`${index + 1}. Nombre: ${cliente.getNombre()}, Dni: ${cliente.getDni()}`);
+        console.log(`${index + 1}. Nombre: ${cliente.getNombre()}, Dni: ${cliente.getDni()}, Cantidad de Visitas: ${cliente.getNumeroVisitas()} VIP: ${cliente.isEsVIP()}`);
       });
   }
 
